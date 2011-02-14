@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>Lift Unit Tests</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.js"></script>
+<script type="text/javascript" src="/lib/beta/js/utils.js"></script>
+<script type="text/javascript" src="/static/src/js/timer.js"></script>
+<script type="text/javascript" src="/static/src/js/unit.js"></script>
+<script type="text/javascript" src="lift.js"></script>
+<script type="text/javascript" src="test-lift.js"></script>
+</head>
+
+<body onload="runner.run();">
+<h1 id="title"><script>document.write(document.title);</script></h1>
+
+<script>
+var liftTest = namespace.lookup('com.pageforest.lift.test');
+var unit = namespace.lookup('org.startpad.unit');
+var runner = namespace.lookup('com.pageforest.lift.test.runner');
+runner.define(function (ns) {
+    function run() {
+        unit.runTest(liftTest);
+    };
+    ns.run = run;
+});
+</script>
+
+<div id="divUnit" style="font-family: Courier;"></div>
+
+</body>
+</html>

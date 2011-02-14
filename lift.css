@@ -1,0 +1,19 @@
+.two-column-grid
+{
+	width: 100%;
+	height: 100%;
+}
+
+.two-column-block-a
+{
+	width: 45%;
+	height: 100%;
+	float: left;
+}
+
+.two-column-block-b
+{
+	width: 45%;
+	height: 100%;
+	clear: left;
+}

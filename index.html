@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" xml:lang="en" lang="en" manifest="cache.manifest">
+<head>
+<!-- <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />-->
+<title>Lift</title>
+<link rel="stylesheet" type="text/css" href="lift.css"/>
+<link rel="icon" type="image/png" href="/images/icon.png" />
+<link rel="apple-touch-icon" href="/images/touch.png" />
+<link rel="stylesheet" type="text/css" href="/lib/beta/css/client.css" />
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.css" />
+<!--<link rel="stylesheet" type="text/css" href="/jquery/jquery.mobile-1.0a3.min.css" />-->
+<script type="text/javascript" src="/jquery/jquery-1.5.min.js"></script>
+<script type="text/javascript" src="/jquery/jquery.mobile-1.0a3.min.js"></script>
+<script type="text/javascript" src="/lib/0.6/js/json2.min.js"></script>
+<script type="text/javascript" src="/lib/beta/js/utils.js"></script>
+<script src="lift.js"></script>
+<script type="text/javascript">
+var lift = namespace.lookup("com.pageforest.lift");
+$(document).ready(lift.onReady);
+</script>
+</head>
+<body>
+
+<div data-role="page" id="home" data-theme="a">
+	<div data-role="header">
+		<h1>Home</h1>
+	</div>
+
+	<div data-role="content" id="content">
+		<!-- <p><a href="#push">Push</a></p>
+		<p><a href="#pull">Pull</a></p> -->
+	</div>
+
+		<div data-role="footer">
+		<h4>Bottom</h4>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div data-role="page" id="push" data-theme="a">
+	<div data-role="header">
+		<h1>Push</h1>
+	</div>
+  
+	<div data-role="content">
+	
+	
+		<div data-role=collapsible>
+			<h3>Cardio</h3>
+			<p>5 min warmup!</p>
+		</div>
+		
+		
+		
+		
+		
+		<div data-role=collapsible data-collapsed=true>
+			<h3>Rotator Cuff Warmup</h3>
+			<p>10 lbs 20 reps horiz to up</p>
+			<p>15 lbs 20 reps down to horiz</p>
+		</div>
+
+		<div data-role=collapsible data-collapsed=true id=01>
+			<h3>Arnold Side Raises</h3>
+			<p>3 sets 8 - 12 reps</p>
+			<div class=ui-grid-c>
+				<div class=ui-block-a>
+					<input type=number id=arnold-side-raises-weight-1 value="" />
+					<input type=number id=arnold-side-raises-weight-2 value="" />
+					<input type=number id=arnold-side-raises-weight-3 value="" />
+				</div>
+				<div class=ui-block-c>
+					<input type=number id=arnold-side-raises-reps-1 value="" />
+					<input type=number id=arnold-side-raises-reps-2 value="" />
+					<input type=number id=arnold-side-raises-reps-3 value="" />
+				</div>
+			</div>
+		</div>
+		
+		<div data-role=collapsible data-collapsed=true>
+			<h3>Bench Press</h3>
+			<p>4 sets 5 - 8 reps</p>
+			<div class=ui-grid-c>
+				<div class=ui-block-a>
+					<input type=number id=arnold-side-raises-weight-1 value="" />
+					<input type=number id=arnold-side-raises-weight-2 value="" />
+					<input type=number id=arnold-side-raises-weight-3 value="" />
+					<input type=number id=arnold-side-raises-weight-3 value="" />
+				</div>
+				<div class=ui-block-b><input style=/></div>
+				<div class=ui-block-c>
+					<input type=number id=arnold-side-raises-reps-1 value="" />
+					<input type=number id=arnold-side-raises-reps-2 value="" />
+					<input type=number id=arnold-side-raises-reps-3 value="" />
+					<input type=number id=arnold-side-raises-reps-3 value="" />
+				</div>
+			</div>
+		</div>
+		<p><a href="#home">Back to home</a></p>
+	</div>
+  
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div>
+</div>
+
+
+
+
+
+<div data-role="page" id="pull" data-theme="a">
+  <div data-role="header">
+    <h1>Pull</h1>
+  </div>
+  <div data-role="content">
+    <ul>
+      <li>5 min cardio</li>
+      <li>Rotator Cuff warmup</li>
+      <li>Arnold Side Raises</li>
+      <li>Bench Press</li>
+      <li>Incline Press</li>
+      <li>Arnold Shoulder Press</li>
+      <li>Dips</li>
+      <li>Tricep Pulldowns</li>
+    </ul>
+    <p><a href="#home">Back to home</a></p>
+  </div>
+  <div data-role="footer">
+    <h4>Page Footer</h4>
+  </div>
+</div>
+
+</body>
+</html>
