@@ -1,19 +1,16 @@
-.two-column-grid
-{
+.ui-grid-a .ui-block-a, .ui-grid-a .ui-block-b {
+	width: 38%;
+	margin: .5em 5%;
+}
+
+h4 {
+	text-align: center;
+	margin: .4em 0;
+}
+
+.min-width-480px input.ui-input-text, .min-width-480px textarea.ui-input-text, .min-width-480px .ui-input-search {
 	width: 100%;
-	height: 100%;
 }
 
-.two-column-block-a
-{
-	width: 45%;
-	height: 100%;
-	float: left;
-}
-
-.two-column-block-b
-{
-	width: 45%;
-	height: 100%;
-	clear: left;
-}
+.ui-icon-play { background-image: url(images/play.png); }
+.ui-icon-pause { background-image: url(images/pause.png); }

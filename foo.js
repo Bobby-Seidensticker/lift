@@ -7,26 +7,21 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
     var clientLib = namespace.lookup('com.pageforest.client');
     var dom = namespace.lookup('org.startpad.dom');
     var format = namespace.lookup('org.startpad.format');
-    var vector = namespace.lookup('org.startpad.vector');
     var util = namespace.util;
 
+    var t = [];
     var template = {
         collapsible: '<div data-role=collapsible data-collapsed=true id=c-e{i}>{c}</div>',
         header: '<h3>{name}</h3>',
         description: '<p>{desc}</p>',
         grid: '<div class=ui-grid-a id=e{i}>' +
-              '<div class=ui-block-a id=e{i}-w><h4>Weight</h4>{w}</div>' +
-              '<div class=ui-block-b id=e{i}-r><h4>Reps</h4>{r}</div></div>' +
-              '<div data-role="controlgroup"><a data-role="button" data-icon="play" id=timer>Start Timer</a>' +
-              '<a data-role="button" data-icon="refresh" id=reset>Reset Timer</a>' +
-              '<a data-role="button" data-icon="plus" id=addSet>Add a Set</a>' +
-              '<a data-role="button" data-icon="check" id=save>Save</a></div>',
+              '<div class=ui-block-a id=e{i}-w><h4>Weight</h4>{w}<a data-role="button" id=timer-{i}>Timer</a></div>' +
+              '<div class=ui-block-b id=e{i}-r><h4>Reps</h4>{r}<a data-role="button">Save</a></div>' +
+              '</div>',
         wInput: '<input type=number id=e{i}-w{j} value=""></input>',
         rInput: '<input type=number id=e{i}-r{j} value=""></input>'
     };
     
-    
-    var t;
     /*  -e0
         collapsible div, exercise zero
         
@@ -101,85 +96,19 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         
     }
 
-    function adjustTimer() {
-        var s = Math.floor((new Date().getTime() - t.init) / 1000);
-        if (s < 10) {
-            t.id.html('00:0' + s);
-            return;
-        }
-        if (s < 60) {
-            t.id.html('00:' + s);
-            return;
-        }
-        var m = Math.floor(s / 60);
-        s -= m * 60;
-        if (m < 10 && s < 10) {
-            t.id.html('0' + m + ':0' + s);
-            return;
-        }
-        if (m < 10){
-            t.id.html('0' + m + ':' + s);
-            return;
-        }
-        if (s < 10) {
-            t.id.html(m + ':0' + s);
-            return;
-        }
-        t.id.html(m + ':' + s);
+    function Timer(id) {
+        this.id = $('#' + id).find(".ui-btn-text");
+        this.date = new Date();
+        this.init = this.date.getTime();
+        this.timer = setInterval(this.adjust(), 1000);
     }
     
-    function newTimer() {
-        var id = $('#timer').find(".ui-btn-text");
-        id.html('00:00');
-        return {
-            id: id,
-            init: new Date().getTime(),
-            timer: setInterval(adjustTimer, 1000),
-            running: true
-        };
-    }
-
-    function changeIcon(id, from, to) {
-        var icon = $('#' + id).find('.ui-icon');
-        icon.removeClass('ui-icon-' + from);
-        icon.addClass('ui-icon-' + to);
-    }
-
-    function playPauseTimer() {
-        if (t == undefined) {
-            t = newTimer();
-            changeIcon('timer', 'play', 'pause');
-            return;
+    Timer.methods({
+        adjust: function () {
+            this.id.html(Math.floor((this.date.getTime() - this.init) / 1000));
         }
-        if (t.running == true) {
-            changeIcon('timer', 'pause', 'play');
-            t.difference = new Date().getTime() - t.init;
-            clearInterval(t.timer);
-            t.running = false;
-            return;
-        }
-        changeIcon('timer', 'play', 'pause');
-        t.date = new Date();
-        t.init = t.date.getTime() - t.difference;
-        t.timer = setInterval(adjustTimer, 500);
-        t.running = true;
-    }
-
-    function resetTimer() {
-        if (t == undefined) {
-            return;
-        }
-        if (t.running) {
-            t.date = new Date();
-            t.init = t.date.getTime();
-            t.id.html(0);
-            return;
-        }
-        t.id.html('Start Timer');
-        t = undefined;
-        return;
-    }
-
+    });
+    
     function onReady()
     {
         var exs = [];
@@ -193,8 +122,18 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         $('#content').page();
         
         var i, t = [];
-        $("#timer").click(playPauseTimer);
-        $("#reset").click(resetTimer);
+        $("#timer-0").click(function () {
+            t[0] = new Timer('timer-' + 0);
+        });
+        $("#timer-1").click(function () {
+            t[1] = new Timer('timer-' + 1);
+        });
+        $("#timer-2").click(function () {
+            t[2] = new Timer('timer-' + 2);
+        });
+        $("#timer-3").click(function () {
+            t[3] = new Timer('timer-' + 3);
+        });
         
         
         ns.client = new clientLib.Client(ns);
@@ -206,6 +145,7 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
     {
         
     }
+
 
     function getDoc()
     {
@@ -221,7 +161,6 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         'setDoc': setDoc,
         'Exercise': Exercise,
         'Workout': Workout,
-        'changeIcon': changeIcon,
         't': t
     });
 });
