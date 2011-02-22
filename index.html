@@ -2,18 +2,19 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" xml:lang="en" lang="en" manifest="cache.manifest">
 <head>
-<!-- <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-<meta name="apple-mobile-web-app-capable" content="yes" />-->
+<meta name="apple-mobile-web-app-capable" content="yes" />
 <title>Lift</title>
 <link rel="icon" type="image/png" href="/images/icon.png" />
 <link rel="apple-touch-icon" href="/images/touch.png" />
 <link rel="stylesheet" type="text/css" href="/lib/beta/css/client.css" />
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.css" />
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.css" />
 <link rel="stylesheet" type="text/css" href="lift.css"/>
 <!--<link rel="stylesheet" type="text/css" href="/jquery/jquery.mobile-1.0a3.min.css" />-->
 <script type="text/javascript" src="/jquery/jquery-1.5.min.js"></script>
-<script type="text/javascript" src="/jquery/jquery.mobile-1.0a3.min.js"></script>
+<script type="text/javascript" src="/jquery/jquery.tmpl.js"></script>
+<script type="text/javascript" src="/jquery/jquery.mobile-1.0a3.js"></script>
 <script type="text/javascript" src="/lib/0.6/js/json2.min.js"></script>
 <script type="text/javascript" src="/lib/beta/js/utils.js"></script>
 <script src="lift.js"></script>
@@ -24,109 +25,277 @@ $(document).ready(lift.onReady);
 </head>
 <body>
 
-<div data-role="page" id="home">
+<script id="homePageTemplate" type="text/html">
 	<div data-role="header">
-		<h1>Home</h1>
+		<h1>${ header }</h1>
 	</div>
-
-	<div data-role="content" id="content">
-		
-	</div>
-
-	<div data-role="footer">
-		<h4>Bottom</h4>
-	</div>
-</div>
-
-
-
-<div data-role="page" id="push">
-	<div data-role="header">
-		<h1>Push</h1>
-	</div>
-  
 	<div data-role="content">
-
-		<div data-role=collapsible>
-			<h3>Cardio</h3>
-			<p>5 min warmup!</p>
-		</div>
-		
-		<div data-role=collapsible data-collapsed=true>
-			<h3>Rotator Cuff Warmup</h3>
-			<p>10 lbs 20 reps horiz to up</p>
-			<p>15 lbs 20 reps down to horiz</p>
-		</div>
-
-		<div data-role=collapsible data-collapsed=true id=01>
-			<h3>Arnold Side Raises</h3>
-			<p>3 sets 8 - 12 reps</p>
-			<div class=ui-grid-c>
-				<div class=ui-block-a>
-					<input type=number id=arnold-side-raises-weight-1 value="" />
-					<input type=number id=arnold-side-raises-weight-2 value="" />
-					<input type=number id=arnold-side-raises-weight-3 value="" />
-				</div>
-				<div class=ui-block-c>
-					<input type=number id=arnold-side-raises-reps-1 value="" />
-					<input type=number id=arnold-side-raises-reps-2 value="" />
-					<input type=number id=arnold-side-raises-reps-3 value="" />
-				</div>
-			</div>
-		</div>
-		
-		<div data-role=collapsible data-collapsed=true>
-			<h3>Bench Press</h3>
-			<p>4 sets 5 - 8 reps</p>
-			<div class=ui-grid-c>
-				<div class=ui-block-a>
-					<input type=number id=arnold-side-raises-weight-1 value="" />
-					<input type=number id=arnold-side-raises-weight-2 value="" />
-					<input type=number id=arnold-side-raises-weight-3 value="" />
-					<input type=number id=arnold-side-raises-weight-3 value="" />
-				</div>
-				<div class=ui-block-b><input style=/></div>
-				<div class=ui-block-c>
-					<input type=number id=arnold-side-raises-reps-1 value="" />
-					<input type=number id=arnold-side-raises-reps-2 value="" />
-					<input type=number id=arnold-side-raises-reps-3 value="" />
-					<input type=number id=arnold-side-raises-reps-3 value="" />
-				</div>
-			</div>
-		</div>
-		<p><a href="#home">Back to home</a></p>
+		{{tmpl($data.workoutGroups) "#workoutGroupTemplate"}}
 	</div>
-  
 	<div data-role="footer">
-		<h4>Page Footer</h4>
+		<h4 class='invis'>${ footer }</h4>
+	</div>
+</script>
+
+<script id="workoutGroupTemplate" type="text/html">
+	<div data-role=collapsible data-collapsed="true">
+		<h3>${ name }</h3>
+		<div data-role=controlgroup>
+			{{tmpl($data.workouts) "#workoutNamesTemplate"}}
+		</div>
+	</div>
+</script>
+
+<script id="workoutNamesTemplate" type="text/html">
+	<a href="#${id}" data-role="button" data-iconpos="right" data-icon="arrow-r">${name}</a>
+</script>
+
+
+<script id="workoutPagesTemplate" type="text/html">
+<div data-role="page" id="${ id }" data-url="${ id }">
+	<div data-role="header">
+		<a href="#home" data-icon="arrow-l" data-direction="reverse" data-transition="slide">Back</a>
+		<h1>${ name }</h1>
+	</div>
+	<div data-role="content">
+		<div data-role=controlgroup>
+			{{each(i, ex) exs}}
+				<a href="#${ id }-${ i }" data-role="button" data-iconpos="right" data-icon="arrow-r">${ ex.name }</a>
+			{{/each}}
+		</div>
+	</div>
+	<div data-role="footer">
+		<h4 class='invis'>'footer'</h4>
+	</div>
+</div>
+
+{{each(i, ex) exs}}
+<div data-role="page" id="${ id }-${ i }"  data-url="${ id }-${ i }">
+	<div data-role="header">
+		<a href="#${ id }" data-icon="arrow-l" data-direction="reverse" data-transition="slide">Back</a>
+		<h1>${ name }</h1>
+	</div>
+	<div data-role="content">
+		{{if exs[i].links[0] !== undefined}}
+			<a href="#${ id }-${ i }-form" data-role="button" data-icon="arrow-r" data-iconpos="right">Proper Form</a>
+		{{/if}}
+		<div class=ui-grid-b>
+			<div class=ui-block-a>
+				<h4>Weight</h4>
+				<input type=number></input>
+				<input type=number></input>
+				<input type=number></input>
+			</div>
+			<div class=ui-block-b>
+				<h4>Reps</h4>
+				<input type=number></input>
+				<input type=number></input>
+				<input type=number></input>
+			</div>
+			<div class=ui-block-c>
+				<a data-role="button" class="first-button" data-icon="delete" data-iconpos="notext"></a>
+				<a data-role="button" data-icon="delete" data-iconpos="notext"></a>
+				<a data-role="button" data-icon="plus" data-iconpos="notext"></a>
+			</div>
+		</div>
+		<h1 class="timer">00:00</h1>
+		<div data-role=controlgroup>
+			<a data-role="button" data-icon="play">Start Timer</a>
+			<a data-role="button" data-icon="refresh">Restart Timer</a>
+		</div>
+		{{if (i + 1) == exs.length}}
+			<a href="#${ id }" data-role="button" data-icon="check" data-direction="reverse" data-transition="slide">Done!</a>
+		{{else}}
+			<a href="#${ id }-${ i + 1 }" data-role="button" data-icon="check" data-transition="slideup">Next Ex</a>
+		{{/if}}
+	</div>
+	<div data-role="footer">
+		<h4> </h4>
+	</div>
+</div>
+
+{{if exs[i].links[0] !== undefined}}
+<div data-role="page" id="${ id }-${ i }-form" data-url="${ id }-${ i }-form">
+	<div data-role="header">
+		<h1>${ name } Form</h1>
+	</div>
+	<div data-role="content">
+		{{each(i, link) links}}
+			<a href="${ link.url }" target="_blank" data-role="button" data-iconpos="right" data-icon="info">${ link.name }</a>
+		{{/each}}
+	</div>
+	<div data-role="footer">
+		<h4> </h4>
+	</div>
+</div>
+{{/if}}
+{{/each}}
+</script>
+
+<div data-role="page" id="home">
+</div>
+
+
+
+
+
+<!-- 
+
+<div data-role="page" id="chest-1">
+	<div data-role="header">
+		<a href="#chest" data-icon="arrow-l">Back</a>
+		<h1>Incline Bench Press</h1>
+	</div>
+	<div data-role="content">
+		<a href="#chest-1-form" data-role="button">Proper Form</a>
+		<div class=input>
+			<h4>Weight</h4><h4>Reps</h4>
+			
+			<div>
+				<input type=number></input>
+				<input type=number></input>
+			</div>
+			<div>
+				<input type=number></input>
+				<input type=number></input>
+				<a data-role="button" data-icon="delete" data-iconpos="notext"></a>
+			</div>
+			<div>
+				<input type=number></input>
+				<input type=number></input>
+				<a data-role="button" data-icon="delete" data-iconpos="notext"></a>
+			</div>
+			<a class="right" data-role="button" data-icon="plus" data-iconpos="notext"></a>
+		</div>
+		<h1 class="timer">00:00</h1>
+		<div data-role=controlgroup>
+			<a data-role="button" data-icon="play">Start Timer</a>
+			<a data-role="button" data-icon="refresh">Restart Timer</a>
+			<a data-role="button" data-icon="plus">Add a Set</a>
+			<a href="#chest-2" data-role="button" data-icon="check">Next Ex</a>
+		</div>
+		<a href="#chest" data-role="button" data-icon="back">Workout Home</a>
+	</div>
+	<div data-role="footer">
+		<h4> </h4>
+	</div>
+</div>
+
+<div data-role="page" id="chest-1-form">
+	<div data-role="header">
+		<h1>Incline Bench Press Form</h1>
+	</div>
+	<div data-role="content">
+		<a href="http://exrx.net/WeightExercises/PectoralClavicular/BBInclineBenchPress.html" data-role="button">Barbell Incline Bench Press</a>
+		<a href="http://exrx.net/WeightExercises/PectoralClavicular/DBInclineBenchPress.html" data-role="button">Dumbbell Incline Bench Press</a>
+	</div>
+	<div data-role="footer">
+		<h4> </h4>
 	</div>
 </div>
 
 
-
-
-
-<div data-role="page" id="pull" data-theme="a">
-  <div data-role="header">
-    <h1>Pull</h1>
-  </div>
-  <div data-role="content">
-    <ul>
-      <li>5 min cardio</li>
-      <li>Rotator Cuff warmup</li>
-      <li>Arnold Side Raises</li>
-      <li>Bench Press</li>
-      <li>Incline Press</li>
-      <li>Arnold Shoulder Press</li>
-      <li>Dips</li>
-      <li>Tricep Pulldowns</li>
-    </ul>
-    <p><a href="#home">Back to home</a></p>
-  </div>
-  <div data-role="footer">
-    <h4>Page Footer</h4>
-  </div>
+<div data-role="page" id="chest-2">
+	<div data-role="header">
+		<a href="#chest" data-icon="arrow-l">Back</a>
+		<h1>Decline Bench Press</h1>
+	</div>
+	<div data-role="content">
+		<a href="#chest-2-form" data-role="button">Proper Form</a>
+		<div class=ui-grid-a id=>
+			<div class=ui-block-a>
+				<h4>Weight</h4>
+				<input type=number></input>
+				<input type=number></input>
+				<input type=number></input>
+			</div>
+			<div class=ui-block-b>
+				<h4>Reps</h4>
+				<input type=number></input>
+				<input type=number></input>
+				<input type=number></input>
+			</div>
+		</div>
+		<h1 class="timer">00:00</h1>
+		<div data-role=controlgroup>
+			<a data-role="button" data-icon="play">Start Timer</a>
+			<a data-role="button" data-icon="refresh">Restart Timer</a>
+			<a data-role="button" data-icon="plus">Add a Set</a>
+			<a href="#chest-3" data-role="button" data-icon="check">Next Ex</a>
+		</div>
+		<a href="#chest" data-role="button" data-icon="back">Workout Home</a>
+	</div>
+	<div data-role="footer">
+		<h4> </h4>
+	</div>
 </div>
+
+<div data-role="page" id="chest-2-form">
+	<div data-role="header">
+		<h1>Decline Bench Press Form</h1>
+	</div>
+	<div data-role="content">
+		<a href="http://exrx.net/WeightExercises/PectoralSternal/BBDeclineBenchPress.html" data-role="button">Barbell Decline Bench Press</a>
+		<a href="http://exrx.net/WeightExercises/PectoralSternal/DBDeclineBenchPress.html" data-role="button">Dumbbell Decline Bench Press</a>
+	</div>
+	<div data-role="footer">
+		<h4> </h4>
+	</div>
+</div>
+
+
+<div data-role="page" id="chest-3">
+	<div data-role="header">
+		<a href="#chest" data-icon="arrow-l">Back</a>
+		<h1>Chest Fly</h1>
+	</div>
+	<div data-role="content">
+		<a href="#chest-3-form" data-role="button">Proper Form</a>
+		<div class=ui-grid-a id=>
+			<div class=ui-block-a>
+				<h4>Weight</h4>
+				<input type=number></input>
+				<input type=number></input>
+				<input type=number></input>
+			</div>
+			<div class=ui-block-b>
+				<h4>Reps</h4>
+				<input type=number></input>
+				<input type=number></input>
+				<input type=number></input>
+			</div>
+		</div>
+		<h1 class="timer">00:00</h1>
+		<div data-role=controlgroup>
+			<a data-role="button" data-icon="play">Start Timer</a>
+			<a data-role="button" data-icon="refresh">Restart Timer</a>
+			<a data-role="button" data-icon="plus">Add a Set</a>
+			<a href="#chest" data-role="button" data-icon="check">Finished!</a>
+		</div>
+		<a href="#chest" data-role="button" data-icon="back">Workout Home</a>
+	</div>
+	<div data-role="footer">
+		<h4> </h4>
+	</div>
+</div>
+
+<div data-role="page" id="chest-3-form">
+	<div data-role="header">
+		<h1>Chest Fly Form</h1>
+	</div>
+	<div data-role="content">
+		<a href="http://exrx.net/WeightExercises/PectoralSternal/LVSeatedFly.html" data-role="button">Seated Chest Fly</a>
+		<a href="http://exrx.net/WeightExercises/PectoralSternal/LVPecDeckFly.html" data-role="button">Deck Chest Fly</a>
+	</div>
+	<div data-role="footer">
+		<h4> </h4>
+	</div>
+</div>
+
+
+ -->
+
+
 
 </body>
 </html>

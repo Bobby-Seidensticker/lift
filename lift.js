@@ -22,8 +22,63 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
               '<a data-role="button" data-icon="plus" id=addSet>Add a Set</a>' +
               '<a data-role="button" data-icon="check" id=save>Save</a></div>',
         wInput: '<input type=number id=e{i}-w{j} value=""></input>',
-        rInput: '<input type=number id=e{i}-r{j} value=""></input>'
+        rInput: '<input type=number id=e{i}-r{j} value=""></input>',
+        page: '<div data-role="page" id="#{id}"><div data-role="header">{header}</div>' +
+                  '<div data-role="content" id={id}-c>{c}</div><div data-role="footer">{footer}</div></div>',
+        buttonGroup: '<div data-role="controlgroup" id={id}>{c}</div>',
+        button: '<a href={href} data-role="button" data-icon="{icon}" id={id}>{c}</a>',
+        
     };
+    /*
+    <div data-role="page" id="chest-0">
+    <div data-role="header">
+        <h1>Bench Press</h1>
+    </div>
+    <div data-role="content">
+        <a href="#chest-0-form" data-role="button">Proper Form</a>
+        <div class=ui-grid-a id=>
+            <div class=ui-block-a>
+                <h4>Weight</h4>
+                <input type=number></input>
+                <input type=number></input>
+                <input type=number></input>
+            </div>
+            <div class=ui-block-b>
+                <h4>Reps</h4>
+                <input type=number></input>
+                <input type=number></input>
+                <input type=number></input>
+            </div>
+        </div>
+        <h1 class="timer">00:00</h1>
+        <div data-role=controlgroup>
+            <a data-role="button" data-icon="play">Start Timer</a>
+            <a data-role="button" data-icon="refresh">Restart Timer</a>
+            <a href="#chest-1" data-role="button" data-icon="check">Next Ex</a>
+        </div>
+        <a href="#chest" data-role="button" data-icon="back">Workout Home</a>
+    </div>
+    <div data-role="footer">
+        <h4> </h4>
+    </div>
+</div>
+
+<div data-role="page" id="chest-0-form">
+    <div data-role="header">
+        <h1>Bench Press Form</h1>
+    </div>
+    <div data-role="content">
+        <a href="http://exrx.net/WeightExercises/PectoralSternal/BBBenchPress.html" data-role="button">Barbell Bench Press</a>
+        <a href="http://exrx.net/WeightExercises/PectoralSternal/DBBenchPress.html" data-role="button">Dumbbell Bench Press</a>
+    </div>
+    <div data-role="footer">
+        <h4> </h4>
+    </div>
+</div>
+    */
+    
+    
+    
     
     
     var t;
@@ -46,7 +101,7 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         this.weight = weight;
     }
 
-    function Exercise(name, sets, info)
+    function Exercise(name, sets, info, links, linkNames)
     {
         if (sets){
             this.sets = sets;
@@ -55,13 +110,30 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         }
         this.name = name;
         this.info = info;
+        var i;
+        if (links == undefined || linkNames == undefined || 
+            links[0] == undefined || linkNames[0] == undefined){
+            return;
+        }
+        if (links.length !== linkNames.length) {
+            throw new Error("Exercise given links and linkNames of unequal length");
+        }
+        this.links = [];
+        for (i = 0; i < links.length; i++) {
+            this.links[i] = {url: links[i], name: linkNames[i]};
+        }
     }
 
     //each workout has exercises
     //each exercise has an id (for the DOM), title, a number of sets to do, and a description
-    function Workout(exs, name, desc)
+    function Workout(name, id, desc, exs)
     {
-        this.exs = exs;
+        if (exs) {
+            this.exs = exs;
+        } else {
+            this.exs = [];
+        }
+        this.id = id;
         this.name = name;
         this.desc = desc;
     }
@@ -180,8 +252,14 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         return;
     }
 
+    function buildPages() {
+        
+    }
+    
     function onReady()
     {
+        
+        /*
         var exs = [];
         exs[0] = new lift.Exercise("Bench Press", 4, "8 to 12 reps to failure");
         exs[1] = new lift.Exercise("Incline Bench Press", 4, "8 to 12 reps to failure");
@@ -190,13 +268,120 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         w = new lift.Workout(exs, "Beginner Chest Routine", "Good for building muscles and stuff");
         $('#content').append(w.toHTML());
         
-        $('#content').page();
         
         var i, t = [];
         $("#timer").click(playPauseTimer);
         $("#reset").click(resetTimer);
+        */
+        
+        home = {};
+        home.header = 'Lift';
+        home.footer = 'footer';
+        home.workoutGroups = [];
+        home.workoutGroups[0] = { name: "Max Muscle Builders", workouts: [] };
+        home.workoutGroups[0].workouts = [ 
+                                          { id: 'mmbChest', name: "Chest Day" },
+                                          { id: 'mmbBack', name: "Back Day" },
+                                          { id: 'mmbShoulder', name: "Shoulder Day" },
+                                          { id: 'mmbArm', name: "Arm Day" },
+                                          { id: 'mmbLeg', name: "Leg Day" } ];
+        
+        home.workoutGroups[1] = { name: "Full Body Conditioning", workouts: [] };
+        home.workoutGroups[1].workouts = [
+                                          { id: 'fbPush', name: "Push Day" },
+                                          { id: 'fbPull', name: "Pull Day" },
+                                          { id: 'fbLeg', name: "Leg Day" } ];
+        home.workoutGroups[2] = { name: "Ab Workouts", workouts: [] };
+        home.workoutGroups[2].workouts = [
+                                          { id: 'abDeath', name: "Deathzercise" },
+                                          { id: 'abOnly', name: "Full Ab Day" },
+                                          { id: 'abBasic', name: "Basic Daily Abs" } ];
+        $("#homePageTemplate").tmpl(home).appendTo( '#home' ).page();
         
         
+        var mmbChest = new Workout("Max Chest Day", 'mmbChest', "Build muscle mass fast.  Use only when eating an excess of calories");
+        mmbChest.exs[0] = new Exercise("Bench Press", 3, "Explosive Power, 6 to 10 reps to failure", 
+            ["http://exrx.net/WeightExercises/PectoralSternal/BBBenchPress.html", "http://exrx.net/WeightExercises/PectoralSternal/DBBenchPress.html"],
+            ["Barbell Bench Press", "Dumbbell Bench Press"]);
+        mmbChest.exs[1] = new Exercise("Incline Bench Press", 3, "Explosive Power, 6 to 10 reps to failure",
+            ["http://exrx.net/WeightExercises/PectoralClavicular/BBInclineBenchPress.html", "http://exrx.net/WeightExercises/PectoralClavicular/DBInclineBenchPress.html"],
+            ["Barbell Incline Bench Press", "Dumbbell Incline Bench Press"]);
+        mmbChest.exs[2] = new Exercise("Decline Bench Press", 3, "Explosive Power, 6 to 10 reps to failure",
+            ["http://exrx.net/WeightExercises/PectoralSternal/BBDeclineBenchPress.html", "http://exrx.net/WeightExercises/PectoralSternal/DBDeclineBenchPress.html"],
+            ["Barbell Decline Bench Press", "Dumbbell Decline Bench Press"]);
+        mmbChest.exs[3] = new Exercise("Flys", 3, "Constant speed, 8 to 12 reps to failure",
+            ["http://exrx.net/WeightExercises/PectoralSternal/LVSeatedFly.html", "http://exrx.net/WeightExercises/PectoralSternal/LVPecDeckFly.html"],
+            ["Lever Seated Fly", "Lever Pec Deck Fly"]);
+        
+        
+        $("#workoutPagesTemplate").tmpl(mmbChest).appendTo( $.mobile.pageContainer ).page();
+        
+        
+        
+        
+        /*
+        var mmb = home.workoutGroups[0].workouts;
+        
+        mmb[1].exercises = ['Deadlifts', 'Pullups', 'Rows', 'Lat Pulldown', 'Rows'];
+        mmb[2].exercises = ['Shoulder Press', 'Lateral Raise', 'Arnold Press', 'Side Raises', 'Front Raises', 'Rear Delts'];
+        mmb[3].exercises = ['Dumbbell Curls', 'Dips', 'Hammer Curls', 'Skullcrushers', 'Concentrated Curls', 'Kickbacks'];
+        mmb[4].exercises = ['Squats', 'Leg Press', 'Leg Curls', 'Leg Extensions', 'Calf Raises'];
+        
+        $("#workoutPageTemplate").tmpl(home.workoutGroups[0]).appendTo( $.mobile.pageContainer ).page();
+        $("#exercisePagesTemplate").tmpl(home.workoutGroups[0].workouts[0].exercises).appendTo( $.mobile.pageContainer ).page();
+        */
+        /*
+        for (var i = 0; i < home.workoutGroups.length; i++) {
+            for (var j = 0; j < homeworkoutGroups[i].workouts.length; j++) {
+                $('#' + home.workoutGroups[i].workouts[j].id).page("destroy").page();
+            }
+        }
+        */
+        
+        
+        //$("#clientTemplate").tmpl(clientData).appendTo($('#home'));
+        
+        
+        
+       /* var pageData = [
+            { header: "home", workoutGroup: "Muscle Builders", 
+                workoutGroupNames: [
+                   { id: 'chest', name: "Chest Day" },
+                   { id: 'back', name: "Back Day" },
+                   { id: 'shoulder', name: "Shoulder Day" },
+                   { id: 'arm', name: "Arm Day" },
+                   { id: 'leg', name: "Leg Day" }
+                ] }
+        ];
+
+        var workoutNames = [
+            { id: 'chest', name: "Chest Day" },
+            { id: 'back', name: "Back Day" },
+            { id: 'shoulder', name: "Shoulder Day" },
+            { id: 'arm', name: "Arm Day" },
+            { id: 'leg', name: "Leg Day" }
+        ];*/
+        
+        
+        //$("#homeTemplate").tmpl(page).appendTo('div');
+        
+        
+        
+        $(window).resize( function(){
+            var height = $(window).height();
+            var width = $(window).width(); 
+            var ob = $('html');
+            if( width > height ) {
+                if( ob.hasClass('portrait') ) {
+                    ob.removeClass('portrait').addClass('landscape');
+                }
+            }else{
+                if( ob.hasClass('landscape') ) {
+                    ob.removeClass('landscape').addClass('portrait');
+                }
+            }
+        });
+
         ns.client = new clientLib.Client(ns);
         ns.client.saveInterval = 60;
         ns.client.autoLoad = false;
