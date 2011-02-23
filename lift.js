@@ -309,13 +309,83 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         mmbChest.exs[2] = new Exercise("Decline Bench Press", 3, "Explosive Power, 6 to 10 reps to failure",
             ["http://exrx.net/WeightExercises/PectoralSternal/BBDeclineBenchPress.html", "http://exrx.net/WeightExercises/PectoralSternal/DBDeclineBenchPress.html"],
             ["Barbell Decline Bench Press", "Dumbbell Decline Bench Press"]);
-        mmbChest.exs[3] = new Exercise("Flys", 3, "Constant speed, 8 to 12 reps to failure",
-            ["http://exrx.net/WeightExercises/PectoralSternal/LVSeatedFly.html", "http://exrx.net/WeightExercises/PectoralSternal/LVPecDeckFly.html"],
-            ["Lever Seated Fly", "Lever Pec Deck Fly"]);
-        
-        
+        mmbChest.exs[3] = new Exercise("Chest Fly", 3, "Constant speed, 8 to 12 reps to failure",
+            ["http://exrx.net/WeightExercises/PectoralSternal/LVSeatedFly.html", "http://exrx.net/WeightExercises/PectoralSternal/LVPecDeckFly.html", "http://exrx.net/WeightExercises/PectoralSternal/DBFly.html"],
+            ["Lever Seated Fly", "Lever Pec Deck Fly", "Dumbbell Fly"]);
         $("#workoutPagesTemplate").tmpl(mmbChest).appendTo( $.mobile.pageContainer ).page();
+
+        var mmbBack = new Workout("Max Back Day", 'mmbBack', "Build muscle mass fast.  Use only when eating an excess of calories");
+        mmbBack.exs[0] = new Exercise("Chin Ups", 3, "Explosive Power, 6 to 10 reps to failure",
+            ["http://exrx.net/WeightExercises/LatissimusDorsi/BWChinup.html", "http://exrx.net/WeightExercises/LatissimusDorsi/WtChinup.html"],
+            ["Bodyweight Chin Up", "Weighted Chin Up"]);
+        mmbBack.exs[1] = new Exercise("Bent-over Row", 3, "Explosive Power, 6 to 10 reps to failure",
+            ["http://exrx.net/WeightExercises/BackGeneral/BBBentOverRow.html", "http://exrx.net/WeightExercises/BackGeneral/DBBentOverRow.html"],
+            ["Barbell Row", "Dumbbell Row"]);
+        mmbBack.exs[2] = new Exercise("Lat Pulldown", 3, "Constant speed, 6 to 10 reps to failure",
+            ["http://exrx.net/WeightExercises/LatissimusDorsi/LVFrontPulldown.html"],
+            ["Lever Front Pulldown"]);
+        mmbBack.exs[3] = new Exercise("Seated Row", 3, "Explosive Power, 6 to 10 reps to failure",
+            ["http://exrx.net/WeightExercises/BackGeneral/CBSeatedRow.html"],
+            ["Cable Seated Row"]);
+        $("#workoutPagesTemplate").tmpl(mmbBack).appendTo( $.mobile.pageContainer ).page();
+
+        var mmbShoulder = new Workout("Max Shoulder Day", 'mmbShoulder', "Build muscle mass fast.  Use only when eating an excess of calories");
+        mmbShoulder.exs[0] = new Exercise("Shoulder Press", 3, "Explosive Power, 6 to 10 reps to failure",
+            ["http://exrx.net/WeightExercises/DeltoidAnterior/BBMilitaryPress.html", "http://exrx.net/WeightExercises/DeltoidAnterior/DBShoulderPress.html"],
+            ["Barbell Shoulder Press", "Dumbbell Shoulder Press"]);
+        mmbShoulder.exs[1] = new Exercise("Upright Row", 3, "Explosive Power, 6 to 10 reps to failure",
+            ["http://exrx.net/WeightExercises/DeltoidLateral/BBUprightRow.html"],
+            ["Barbell Upright Row"]);
+        mmbShoulder.exs[2] = new Exercise("Arnold Press", 3, "Constant speed, 6 to 10 reps to failure",
+            ["http://exrx.net/WeightExercises/DeltoidAnterior/DBArnoldPress.html"],
+            ["Arnold Press"]);
+        mmbShoulder.exs[3] = new Exercise("Rear Lateral Fly", 3, "Constant speed, 6 to 10 reps to failure",
+            ["http://exrx.net/WeightExercises/DeltoidPosterior/LVRearLateralRaise.html", "http://exrx.net/WeightExercises/DeltoidPosterior/DBRearLateralRaise.html"],
+            ["Rear Lateral Fly", "Dumbbel Rear Lateral Raise"]);
+        mmbShoulder.exs[4] = new Exercise("Shrugs", 3, "Explosive Power, 6 to 10 reps to failure",
+            ["http://exrx.net/WeightExercises/TrapeziusUpper/BBShrug.html", "http://exrx.net/WeightExercises/TrapeziusUpper/DBShrug.html"],
+            ["Barbell Shrug", "Dumbbell Shrug"]);
+        $("#workoutPagesTemplate").tmpl(mmbShoulder).appendTo( $.mobile.pageContainer ).page();
         
+        var mmbArm = new Workout("Max Arm Day", 'mmbArm', "Build muscle mass fast.  Use only when eating an excess of calories");
+        mmbArm.exs[0] = new Exercise("Dumbbell Curls", 3, "Constant speed, keep under control, 6 to 10 reps to failure",
+            ["http://exrx.net/WeightExercises/Biceps/DBCurl.html"],
+            ["Dumbbell Curl"]);
+        mmbArm.exs[1] = new Exercise("Tricep Dips", 3, "Constant speed, keep under control, 6 to 10 reps to failure",
+            ["http://exrx.net/WeightExercises/Triceps/ASTriDip.html"],
+            ["Tricep Dip"]);
+        mmbArm.exs[2] = new Exercise("Barbell Curls", 3, "Constant speed, keep under control, 6 to 10 reps to failure",
+            ["http://exrx.net/WeightExercises/Biceps/BBCurl.html", "http://exrx.net/WeightExercises/Brachialis/BBProneInclineCurl.html"],
+            ["Barbell Curl", "Barbell Prone Incline Curl"]);
+        mmbArm.exs[3] = new Exercise("Skull Crushers", 3, "Constant speed, keep under control, 6 to 10 reps to failure",
+            ["http://exrx.net/WeightExercises/Triceps/BBLyingTriExtSC.html"],
+            ["Skull Crusher"]);
+        mmbArm.exs[4] = new Exercise("Preacher Curl", 3, "Constant speed, keep under control, 8 to 12 reps to failure",
+            ["http://exrx.net/WeightExercises/Brachialis/BBPreacherCurl.html"],
+            ["Preacher Curl"]);
+        mmbArm.exs[5] = new Exercise("Dumbbell Kickback", 3, "Constant speed, squeeze at the top, 8 to 12 reps to failure",
+            ["http://exrx.net/WeightExercises/Triceps/DBKickback.html"],
+            ["Dumbbell Kickback"]);
+        $("#workoutPagesTemplate").tmpl(mmbArm).appendTo( $.mobile.pageContainer ).page();
+        
+        
+        var mmbLeg = new Workout("Max Leg Day", 'mmbLeg', "Build muscle mass fast.  Use only when eating an excess of calories");
+        mmbLeg.exs[0] = new Exercise("Squat", 3, "Explosive Power, 6 to 10 reps to failure",
+            ["http://exrx.net/WeightExercises/Quadriceps/BBSquat.html"],
+            ["Squat"]);
+        mmbLeg.exs[1] = new Exercise("Lunge", 3, "Explosive Power, 6 to 10 reps per leg to failure",
+            ["http://exrx.net/WeightExercises/Quadriceps/DBLunge.html"],
+            ["Dumbbell Lunge"]);
+        mmbLeg.exs[2] = new Exercise("Leg Curl", 3, "Constant speed, 8 to 12 reps to failure",
+            ["http://exrx.net/WeightExercises/Hamstrings/LVSeatedLegCurlH.html"],
+            ["Seated Leg Curl"]);
+        mmbLeg.exs[3] = new Exercise("Leg Extension", 3, "Constant speed, 8 to 12 reps to failure",
+            ["http://exrx.net/WeightExercises/Quadriceps/LVLegExtension.html"],
+            ["Seated Leg Extension"]);
+        mmbLeg.exs[4] = new Exercise("Calf Raises", 3, "Constant speed, 8 to 12 reps to failure",
+            ["http://exrx.net/WeightExercises/Gastrocnemius/BBStandingCalfRaise.html", "http://exrx.net/WeightExercises/Gastrocnemius/LVSeatedCalfPress.html"],
+            ["Barbell Standing Calf Raise", "Seated Calf Press"]);
+        $("#workoutPagesTemplate").tmpl(mmbLeg).appendTo( $.mobile.pageContainer ).page();
         
         
         
