@@ -1998,7 +1998,7 @@ $.widget( "mobile.page", $.mobile.widget, {
 			transitionPages();
 		} else {
 
-			//if to exists in DOM, save a reference to it in duplicateCachedPage for removal after page change
+		    //if to exists in DOM, save a reference to it in duplicateCachedPage for removal after page change
 			if( to.length ){
 				duplicateCachedPage = to;
 			}
@@ -2070,13 +2070,14 @@ $.widget( "mobile.page", $.mobile.widget, {
 					if(base){
 						base.set(path.get());
 					}
+					/*
 					$("<div class='ui-loader ui-overlay-shadow ui-body-e ui-corner-all'><h1>Error Loading Page</h1></div>")
 						.css({ "display": "block", "opacity": 0.96, "top": $(window).scrollTop() + 100 })
 						.appendTo( $.mobile.pageContainer )
 						.delay( 800 )
 						.fadeOut( 400, function(){
 							$(this).remove();
-						});
+						});*/
 					releasePageTransitionLock();
 				}
 			});

@@ -14,6 +14,14 @@
 <!--<link rel="stylesheet" type="text/css" href="/jquery/jquery.mobile-1.0a3.min.css" />-->
 <script type="text/javascript" src="/jquery/jquery-1.5.min.js"></script>
 <script type="text/javascript" src="/jquery/jquery.tmpl.js"></script>
+<script type="text/javascript">
+	$(document).bind("mobileinit", function(){
+	    $.extend( $.mobile , {
+	        
+	    });
+	    
+	})
+</script>
 <script type="text/javascript" src="/jquery/jquery.mobile-1.0a3.js"></script>
 <script type="text/javascript" src="/lib/0.6/js/json2.min.js"></script>
 <script type="text/javascript" src="/lib/beta/js/utils.js"></script>
@@ -28,6 +36,7 @@ $(document).ready(lift.onReady);
 <script id="homePageTemplate" type="text/html">
 	<div data-role="header">
 		<h1>${ header }</h1>
+		<a data-icon="star" class="sign-in">Sign In</a>
 	</div>
 	<div data-role="content">
 		{{tmpl($data.workoutGroups) "#workoutGroupTemplate"}}
@@ -47,22 +56,37 @@ $(document).ready(lift.onReady);
 </script>
 
 <script id="workoutNamesTemplate" type="text/html">
-	<a href="#${id}" data-role="button" data-iconpos="right" data-icon="arrow-r">${name}</a>
+	<a href="#${id}" data-role="button" data-iconpos="right" data-icon="arrow-r" >${name}</a>
 </script>
-
 
 <script id="workoutPagesTemplate" type="text/html">
 <div data-role="page" id="${ id }" data-url="${ id }">
 	<div data-role="header">
-		<a href="#home" data-icon="arrow-l" data-direction="reverse" data-transition="slide">Back</a>
+		<a href="#home" data-icon="arrow-l" data-direction="reverse" data-transition="slide" >Back</a>
 		<h1>${ name }</h1>
+		<a data-icon="star" class="sign-in">Sign In</a>
 	</div>
 	<div data-role="content">
-		<div data-role=controlgroup>
-			{{each(i, ex) exs}}
-				<a href="#${ id }-${ i }" data-role="button" data-iconpos="right" data-icon="arrow-r">${ ex.name }</a>
-			{{/each}}
+		<div class=ui-grid-a>
+			<div class="ui-block-a w-edit">
+				<div data-role=controlgroup>
+					{{each(i, ex) exs}}
+						<a href="#${ id }-${ i }" data-role="button" data-iconpos="right" data-icon="arrow-r" >${ ex.name }</a>
+					{{/each}}
+				</div>
+			</div>
+			<div class="ui-block-b w-edit">
+				{{each exs}}
+					<div data-role="controlgroup" data-type="horizontal">
+						<a data-role="button" data-icon="arrow-d" data-iconpos="notext">Move down</a>
+						<a data-role="button" data-icon="arrow-u" data-iconpos="notext">Move up</a>
+						<a data-role="button" data-icon="delete" data-iconpos="notext">Delete</a>
+					</div>
+				{{/each}}
+				<a data-role="button" data-icon="plus" data-iconpos="notext">Add Exercise</a>
+			</div>
 		</div>
+		<a href="#editW" data-role="button" data-rel="dialog" data-transition="pop">Edit this workout</a>
 	</div>
 	<div data-role="footer">
 		<h4 class='invis'>'footer'</h4>
@@ -72,41 +96,44 @@ $(document).ready(lift.onReady);
 {{each(i, ex) exs}}
 <div data-role="page" id="${ id }-${ i }"  data-url="${ id }-${ i }">
 	<div data-role="header">
-		<a href="#${ id }" data-icon="arrow-l" data-direction="reverse" data-transition="slide">Back</a>
+		<a href="#${ id }" class="save" data-icon="arrow-l" data-direction="reverse" data-transition="slide" >Back</a>
 		<h1>${ name }</h1>
+		<a data-icon="star" class="sign-in">Sign In</a>
 	</div>
 	<div data-role="content">
 		{{if exs[i].links[0] !== undefined}}
-			<a href="#${ id }-${ i }-form" data-role="button" data-icon="arrow-r" data-iconpos="right">Proper Form</a>
+			<a href="#${ id }-${ i }-form" data-role="button" data-icon="arrow-r" data-iconpos="right" >Proper Form</a>
 		{{/if}}
 		<div class=ui-grid-b>
 			<div class=ui-block-a>
 				<h4>Weight</h4>
-				<input type=number></input>
-				<input type=number></input>
-				<input type=number></input>
+				{{each(j, set) sets}}
+					<input type=number id="${id}-${i}-w${j}"></input>
+				{{/each}}
 			</div>
 			<div class=ui-block-b>
 				<h4>Reps</h4>
-				<input type=number></input>
-				<input type=number></input>
-				<input type=number></input>
+				{{each(j, set) sets}}
+					<input type=number id="${id}-${i}-r${j}"></input>
+				{{/each}}
 			</div>
 			<div class=ui-block-c>
-				<a data-role="button" class="first-button" data-icon="delete" data-iconpos="notext"></a>
-				<a data-role="button" data-icon="delete" data-iconpos="notext"></a>
+				<a data-role="button" class="invis-button" data-iconpos="notext">holder</a>
+				{{each(j, set) sets}}
+					{{if j < (sets.length - 1)}}<a data-role="button" data-icon="delete" data-iconpos="notext"></a>{{/if}}
+				{{/each}}
 				<a data-role="button" data-icon="plus" data-iconpos="notext"></a>
 			</div>
 		</div>
 		<h1 class="timer">00:00</h1>
 		<div data-role=controlgroup>
-			<a data-role="button" data-icon="play">Start Timer</a>
+			<a data-role="button" data-icon="play" id="${ id }-${ i }">Start Timer</a>
 			<a data-role="button" data-icon="refresh">Restart Timer</a>
 		</div>
 		{{if (i + 1) == exs.length}}
-			<a href="#${ id }" data-role="button" data-icon="check" data-direction="reverse" data-transition="slide">Done!</a>
+			<a href="#${ id }" class='save' id="${ id }-${ i }-save" data-role="button" data-icon="check" data-direction="reverse" data-transition="slide" >Done!</a>
 		{{else}}
-			<a href="#${ id }-${ i + 1 }" data-role="button" data-icon="check" data-transition="slideup">Next Ex</a>
+			<a href="#${ id }-${ i + 1 }" class='save' id="${ id }-${ i }-save" data-role="button" data-icon="check" data-transition="slideup" >Next Ex</a>
 		{{/if}}
 	</div>
 	<div data-role="footer">
@@ -117,11 +144,13 @@ $(document).ready(lift.onReady);
 {{if exs[i].links[0] !== undefined}}
 <div data-role="page" id="${ id }-${ i }-form" data-url="${ id }-${ i }-form">
 	<div data-role="header">
+		<a href="#${ id }-${ i }" class="save" data-icon="arrow-l" data-direction="reverse" data-transition="slide" >Back</a>
 		<h1>${ name } Form</h1>
+		<a data-icon="star" class="sign-in">Sign In</a>
 	</div>
 	<div data-role="content">
 		{{each(i, link) links}}
-			<a href="${ link.url }" target="_blank" data-role="button" data-iconpos="right" data-icon="info">${ link.name }</a>
+			<a href="${ link.url }" target="_blank" data-role="button" data-iconpos="right" data-icon="info" >${ link.name }</a>
 		{{/each}}
 	</div>
 	<div data-role="footer">

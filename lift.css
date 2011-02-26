@@ -8,8 +8,8 @@
 .landscape .ui-grid-b input { width: 100%; height: 20px; margin: 1px 0;}
 .landscape .ui-grid-b .ui-block-c a { height: 20px; margin: 6px 50% 4px 0; }
 
-.portrait .ui-grid-b .ui-block-c a.first-button { margin-top: 73px }
-.landscape .ui-grid-b .ui-block-c a.first-button { margin-top: 73px }
+.portrait .ui-grid-b .ui-block-c a.invis-button { margin-top: 36px; visibility: hidden; }
+.landscape .ui-grid-b .ui-block-c a.invis-button { margin-top: 36px; visibility: hidden; }
 
 .invis { visibility: hidden; }
 
@@ -29,3 +29,9 @@ h1.timer {
 	font-weight: bolder;
 	text-align: center;
 }
+
+
+.portrait .ui-grid-a .ui-block-a .w-edit, .landscape .ui-grid-a .ui-block-a .w-edit { 
+	width: 90%; }
+.portrait .ui-grid-a .ui-block-b .w-edit, .landscape .ui-grid-a .ui-block-b .w-edit {
+	width: 30%; margin: 5px 5%; }
