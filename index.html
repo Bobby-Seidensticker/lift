@@ -127,8 +127,8 @@ $(document).ready(lift.onReady);
 		</div>
 		<h1 class="timer">00:00</h1>
 		<div data-role=controlgroup>
-			<a data-role="button" data-icon="play" id="${ id }-${ i }">Start Timer</a>
-			<a data-role="button" data-icon="refresh">Restart Timer</a>
+			<a data-role="button" data-icon="play" class="timersp">Start Timer</a>
+			<a data-role="button" data-icon="refresh" class="timerrs">Restart Timer</a>
 		</div>
 		{{if (i + 1) == exs.length}}
 			<a href="#${ id }" class='save' id="${ id }-${ i }-save" data-role="button" data-icon="check" data-direction="reverse" data-transition="slide" >Done!</a>

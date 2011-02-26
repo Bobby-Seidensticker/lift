@@ -185,7 +185,7 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
     }
     
     function newTimer() {
-        var id = $('#timer').find(".ui-btn-text");
+        id = $('.ui-page-active').find('.timer');
         id.html('00:00');
         return {
             id: id,
@@ -236,10 +236,6 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         return;
     }
 
-    function buildPages() {
-        
-    }
-    
     function onReady()
     {
         
@@ -380,8 +376,7 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         $(parts.create).click(function() {
             $(parts.editW).dialog('close');
         });
-        
-        
+
         $(window).resize( function() {
             var height = $(window).height();
             var width = $(window).width(); 
@@ -409,15 +404,15 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
                 });
             }
         }
-        
+
+        $('.timersp').click(playPauseTimer);
+        $('.timerrs').click(resetTimer);
+
         $('.save').click(function(){
             console.log('save button clicked');
             ns.client.save();
         });
-        
         $('.sign-in').click(ns.client.signInOut.fnMethod(ns.client));
-        
-        
         ns.client.autoLoad = false;
     }
 
@@ -440,7 +435,7 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
             $('.sign-in').find('.ui-btn-text').html('Sign In');
             return;
         }
-        $('.sign-in').find('.ui-btn-text').html('Sign Out, ' + ns.client.username);
+        $('.sign-in').find('.ui-btn-text').html('Sign Out');
     }
     
     function setDoc(json)
