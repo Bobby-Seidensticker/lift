@@ -1,15 +1,6 @@
-.portrait .ui-grid-b .ui-block-a, .portrait .ui-grid-b .ui-block-b { width: 32%; margin: 0 5%; }
-.portrait .ui-grid-b .ui-block-c { width: 8%; margin: 0 2%; }
-.landscape .ui-grid-b .ui-block-a, .landscape .ui-grid-b .ui-block-b { width: 30%; margin: 0 5%; }
-.landscape .ui-grid-b .ui-block-c { width: 10%; margin: 0 8% 0 2%; }
+.portrait .ui-grid-a .ui-block-a, .portrait .ui-grid-a .ui-block-b { width: 40%; margin: 0 5%; }
+.landscape .ui-grid-a .ui-block-a, .landscape .ui-grid-a .ui-block-b { width: 40%; margin: 0 5%; }
 
-.portrait .ui-grid-b input { width: 100%; height: 20px; margin: 3px 0;}
-.portrait .ui-grid-b .ui-block-c a { height: 20px; margin: 4px 0 7px 20%; }
-.landscape .ui-grid-b input { width: 100%; height: 20px; margin: 1px 0;}
-.landscape .ui-grid-b .ui-block-c a { height: 20px; margin: 6px 50% 4px 0; }
-
-.portrait .ui-grid-b .ui-block-c a.invis-button { margin-top: 36px; visibility: hidden; }
-.landscape .ui-grid-b .ui-block-c a.invis-button { margin-top: 36px; visibility: hidden; }
 
 .invis { visibility: hidden; }
 
@@ -35,3 +26,26 @@ h1.timer {
 	width: 90%; }
 .portrait .ui-grid-a .ui-block-b .w-edit, .landscape .ui-grid-a .ui-block-b .w-edit {
 	width: 30%; margin: 5px 5%; }
+
+
+
+
+
+
+/*
+
+for delete and add sets buttons
+.portrait .ui-grid-b .ui-block-a, .portrait .ui-grid-b .ui-block-b { width: 32%; margin: 0 5%; }
+.portrait .ui-grid-b .ui-block-c { width: 8%; margin: 0 2%; }
+.landscape .ui-grid-b .ui-block-a, .landscape .ui-grid-b .ui-block-b { width: 30%; margin: 0 5%; }
+.landscape .ui-grid-b .ui-block-c { width: 10%; margin: 0 8% 0 2%; }
+
+.portrait .ui-grid-b input { width: 100%; height: 20px; margin: 3px 0;}
+.portrait .ui-grid-b .ui-block-c a { height: 20px; margin: 4px 0 7px 20%; }
+.landscape .ui-grid-b input { width: 100%; height: 20px; margin: 1px 0;}
+.landscape .ui-grid-b .ui-block-c a { height: 20px; margin: 6px 50% 4px 0; }
+
+.portrait .ui-grid-b .ui-block-c a.invis-button { margin-top: 36px; visibility: hidden; }
+.landscape .ui-grid-b .ui-block-c a.invis-button { margin-top: 36px; visibility: hidden; }
+
+*/

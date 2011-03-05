@@ -1,6 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" xml:lang="en" lang="en" manifest="cache.manifest">
+<!DOCTYPE html> 
+<html manifest="/app.manifestremovethis">
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
@@ -9,21 +8,21 @@
 <link rel="icon" type="image/png" href="/images/icon.png" />
 <link rel="apple-touch-icon" href="/images/touch.png" />
 <link rel="stylesheet" type="text/css" href="/lib/beta/css/client.css" />
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.css" />
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.css" />
 <link rel="stylesheet" type="text/css" href="lift.css"/>
-<!--<link rel="stylesheet" type="text/css" href="/jquery/jquery.mobile-1.0a3.min.css" />-->
-<script type="text/javascript" src="/jquery/jquery-1.5.min.js"></script>
-<script type="text/javascript" src="/jquery/jquery.tmpl.js"></script>
+
+<script type="text/javascript" src="/jquery/jquery-1.5.1.js"></script>
+<script type="text/javascript" src="/jquery/jquery.tmpl.min.js"></script>
 <script type="text/javascript">
-	$(document).bind("mobileinit", function(){
-	    $.extend( $.mobile , {
-	        
-	    });
-	    
-	})
+$(document).bind('mobilinit', function(){
+    
+    
+});
+
 </script>
 <script type="text/javascript" src="/jquery/jquery.mobile-1.0a3.js"></script>
-<script type="text/javascript" src="/lib/0.6/js/json2.min.js"></script>
+
+<script type="text/javascript" src="/lib/beta/js/json2.min.js"></script>
 <script type="text/javascript" src="/lib/beta/js/utils.js"></script>
 <script src="lift.js"></script>
 <script type="text/javascript">
@@ -67,26 +66,9 @@ $(document).ready(lift.onReady);
 		<a data-icon="star" class="sign-in">Sign In</a>
 	</div>
 	<div data-role="content">
-		<div class=ui-grid-a>
-			<div class="ui-block-a w-edit">
-				<div data-role=controlgroup>
-					{{each(i, ex) exs}}
-						<a href="#${ id }-${ i }" data-role="button" data-iconpos="right" data-icon="arrow-r" >${ ex.name }</a>
-					{{/each}}
-				</div>
-			</div>
-			<div class="ui-block-b w-edit">
-				{{each exs}}
-					<div data-role="controlgroup" data-type="horizontal">
-						<a data-role="button" data-icon="arrow-d" data-iconpos="notext">Move down</a>
-						<a data-role="button" data-icon="arrow-u" data-iconpos="notext">Move up</a>
-						<a data-role="button" data-icon="delete" data-iconpos="notext">Delete</a>
-					</div>
-				{{/each}}
-				<a data-role="button" data-icon="plus" data-iconpos="notext">Add Exercise</a>
-			</div>
-		</div>
-		<a href="#editW" data-role="button" data-rel="dialog" data-transition="pop">Edit this workout</a>
+		{{each(i, ex) exs}}
+			<a href="#${ id }-${ i }" data-role="button" data-iconpos="right" data-icon="arrow-r" >${ ex.name }</a>
+		{{/each}}
 	</div>
 	<div data-role="footer">
 		<h4 class='invis'>'footer'</h4>
@@ -101,10 +83,14 @@ $(document).ready(lift.onReady);
 		<a data-icon="star" class="sign-in">Sign In</a>
 	</div>
 	<div data-role="content">
-		{{if exs[i].links[0] !== undefined}}
+		{{if exs[i].links !== undefined}}
 			<a href="#${ id }-${ i }-form" data-role="button" data-icon="arrow-r" data-iconpos="right" >Proper Form</a>
 		{{/if}}
-		<div class=ui-grid-b>
+		<div data-role="collapsible">
+		<h3>Description and Info</h3>
+		<p> ${ ex.info } </p>
+		</div>
+		<div class=ui-grid-a>
 			<div class=ui-block-a>
 				<h4>Weight</h4>
 				{{each(j, set) sets}}
@@ -117,31 +103,26 @@ $(document).ready(lift.onReady);
 					<input type=number id="${id}-${i}-r${j}"></input>
 				{{/each}}
 			</div>
-			<div class=ui-block-c>
-				<a data-role="button" class="invis-button" data-iconpos="notext">holder</a>
-				{{each(j, set) sets}}
-					{{if j < (sets.length - 1)}}<a data-role="button" data-icon="delete" data-iconpos="notext"></a>{{/if}}
-				{{/each}}
-				<a data-role="button" data-icon="plus" data-iconpos="notext"></a>
-			</div>
 		</div>
 		<h1 class="timer">00:00</h1>
 		<div data-role=controlgroup>
-			<a data-role="button" data-icon="play" class="timersp">Start Timer</a>
 			<a data-role="button" data-icon="refresh" class="timerrs">Restart Timer</a>
+			<a data-role="button" data-icon="play" class="timersp">Start Timer</a>
 		</div>
-		{{if (i + 1) == exs.length}}
-			<a href="#${ id }" class='save' id="${ id }-${ i }-save" data-role="button" data-icon="check" data-direction="reverse" data-transition="slide" >Done!</a>
-		{{else}}
-			<a href="#${ id }-${ i + 1 }" class='save' id="${ id }-${ i }-save" data-role="button" data-icon="check" data-transition="slideup" >Next Ex</a>
-		{{/if}}
+		<div data-role=controlgroup>
+			{{if (i + 1) == exs.length}}
+				<a href="#${ id }" class='save' id="${ id }-${ i }-save" data-role="button" data-icon="check" data-direction="reverse" data-transition="slide" >Save & Done!</a>
+			{{else}}
+				<a href="#${ id }-${ i + 1 }" class='save' id="${ id }-${ i }-save" data-role="button" data-icon="check">Save & Next</a>
+			{{/if}}
+		</div>
 	</div>
 	<div data-role="footer">
 		<h4> </h4>
 	</div>
 </div>
 
-{{if exs[i].links[0] !== undefined}}
+{{if exs[i].links !== undefined}}
 <div data-role="page" id="${ id }-${ i }-form" data-url="${ id }-${ i }-form">
 	<div data-role="header">
 		<a href="#${ id }-${ i }" class="save" data-icon="arrow-l" data-direction="reverse" data-transition="slide" >Back</a>
@@ -163,6 +144,68 @@ $(document).ready(lift.onReady);
 
 <div data-role="page" id="home">
 </div>
+
+
+
+<!-- 
+
+delete and add sets buttons
+
+<div class=ui-grid-b>
+			<div class=ui-block-a>
+				<h4>Weight</h4>
+				{{each(j, set) sets}}
+					<input type=number id="${id}-${i}-w${j}"></input>
+				{{/each}}
+			</div>
+			<div class=ui-block-b>
+				<h4>Reps</h4>
+				{{each(j, set) sets}}
+					<input type=number id="${id}-${i}-r${j}"></input>
+				{{/each}}
+			</div>
+			<div class=ui-block-c>
+				<a data-role="button" class="invis-button" data-iconpos="notext">holder</a>
+				{{each(j, set) sets}}
+					{{if j < (sets.length - 1)}}<a data-role="button" data-icon="delete" data-iconpos="notext"></a>{{/if}}
+				{{/each}}
+				<a data-role="button" data-icon="plus" data-iconpos="notext"></a>
+			</div>
+		</div>
+
+ -->
+
+
+
+
+<!-- 
+
+//editing exercises in a workout
+
+<div class=ui-grid-a>
+			<div class="ui-block-a w-edit">
+				<div data-role=controlgroup>
+					{{each(i, ex) exs}}
+						<a href="#${ id }-${ i }" data-role="button" data-iconpos="right" data-icon="arrow-r" >${ ex.name }</a>
+					{{/each}}
+				</div>
+			</div>
+			<div class="ui-block-b w-edit">
+				{{each exs}}
+					<div data-role="controlgroup" data-type="horizontal">
+						<a data-role="button" data-icon="arrow-d" data-iconpos="notext">Move down</a>
+						<a data-role="button" data-icon="arrow-u" data-iconpos="notext">Move up</a>
+						<a data-role="button" data-icon="delete" data-iconpos="notext">Delete</a>
+					</div>
+				{{/each}}
+				<a data-role="button" data-icon="plus" data-iconpos="notext">Add Exercise</a>
+			</div>
+		</div> 
+		
+		
+		<a href="#editW" data-role="button" data-rel="dialog" data-transition="pop">Edit this workout</a>
+		-->
+
 
 
 
