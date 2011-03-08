@@ -81,80 +81,64 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
     function adjustTimer() {
         var s = Math.floor((new Date().getTime() - t.init) / 1000);
         if (s < 10) {
-            t.id.html('00:0' + s);
+            t.numid.html('00:0' + s);
             return;
         }
         if (s < 60) {
-            t.id.html('00:' + s);
+            t.numid.html('00:' + s);
             return;
         }
         var m = Math.floor(s / 60);
         s -= m * 60;
         if (m < 10 && s < 10) {
-            t.id.html('0' + m + ':0' + s);
+            t.numid.html('0' + m + ':0' + s);
             return;
         }
         if (m < 10){
-            t.id.html('0' + m + ':' + s);
+            t.numid.html('0' + m + ':' + s);
             return;
         }
         if (s < 10) {
-            t.id.html(m + ':0' + s);
+            t.numid.html(m + ':0' + s);
             return;
         }
-        t.id.html(m + ':' + s);
+        t.numid.html(m + ':' + s);
     }
     
     function newTimer() {
-        id = $('.ui-page-active').find('.timer');
-        id.html('00:00');
+        var active = $('.ui-page-active');
+        var start = active.find('#start');
+        var numid = active.find('.timer');
+        var textid = start.find('.ui-btn-text');
+        var iconid = start.find('.ui-icon');
+        iconid.addClass('ui-icon-pause');
         return {
-            id: id,
-            init: new Date().getTime(),
-            timer: setInterval(adjustTimer, 1000),
-            running: true
+            numid: numid,
+            textid: textid,
+            iconid: iconid
         };
     }
 
-    function changeIcon(id, from, to) {
-        var icon = $('#' + id).find('.ui-icon');
-        icon.removeClass('ui-icon-' + from);
-        icon.addClass('ui-icon-' + to);
-    }
-
-    function playPauseTimer() {
+    function toggleTimer() {
         if (t == undefined) {
             t = newTimer();
-            changeIcon('timer', 'play', 'pause');
-            return;
-        }
-        if (t.running == true) {
-            changeIcon('timer', 'pause', 'play');
-            t.difference = new Date().getTime() - t.init;
-            clearInterval(t.timer);
-            t.running = false;
-            return;
-        }
-        changeIcon('timer', 'play', 'pause');
-        t.date = new Date();
-        t.init = t.date.getTime() - t.difference;
-        t.timer = setInterval(adjustTimer, 500);
-        t.running = true;
-    }
-
-    function resetTimer() {
-        if (t == undefined) {
-            return;
         }
         if (t.running) {
-            t.date = new Date();
-            t.init = t.date.getTime();
-            t.id.html('00:00');
+            t.running = false;
+            t.iconid.removeClass('ui-icon-pause');
+            t.iconid.addClass('ui-icon-play');
+            t.textid.html("Start Timer");
+            clearInterval(t.timer);
             return;
         }
-        t.id.html('00:00');
-        t = undefined;
-        return;
+        t.numid.html('00:00');
+        t.date = new Date();
+        t.init = t.date.getTime();
+        t.timer = setInterval(adjustTimer, 500);
+        t.running = true;
+        t.iconid.addClass('ui-icon-pause');
+        t.iconid.removeClass('ui-icon-play');
+        t.textid.html("Stop Timer");
     }
 
     function loadq() {
@@ -227,29 +211,26 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
                                           { id: 'fbLeg', name: "Leg Day" } ];
         home.workoutGroups[2] = { name: "Ab Workouts", workouts: [] };
         home.workoutGroups[2].workouts = [
-                                          { id: 'abDeath', name: "Deathzercise" },
-                                          { id: 'abOnly', name: "Full Ab Day" },
-                                          { id: 'abBasic', name: "Basic Daily Abs" } ];
+                                          { id: 'abDeath', name: "Deathzercise" } ];
         home.workoutGroups[3] = { name: "Daily No Equipment", workouts: [] };
         home.workoutGroups[3].workouts = [
-                                          { id: 'dailyM', name: "Daily Man" },
-                                          { id: 'dailyF', name: "Daily Woman" } ];
+                                          { id: 'dailyM', name: "Daily Man" } ];
         $("#homePageTemplate").tmpl(home).appendTo( "#home" ).page();
         
         var initLoad = new loadq();
         
         var mmbChest = new Workout("Max Chest Day", 'mmbChest', "Build muscle mass fast.  Use only when eating an excess of calories");
         
-        mmbChest.exs[0] = new Exercise("Bench Press", 4, "Explosive Power, 6 to 10 reps to failure", 
+        mmbChest.exs[0] = new Exercise("Bench Press", 3, "Explosive Power, 6 to 10 reps to failure", 
             ["http://exrx.net/WeightExercises/PectoralSternal/BBBenchPress.html", "http://exrx.net/WeightExercises/PectoralSternal/DBBenchPress.html"],
             ["Barbell Bench Press", "Dumbbell Bench Press"]);
         mmbChest.exs[1] = new Exercise("Incline Bench Press", 3, "Explosive Power, 6 to 10 reps to failure",
             ["http://exrx.net/WeightExercises/PectoralClavicular/BBInclineBenchPress.html", "http://exrx.net/WeightExercises/PectoralClavicular/DBInclineBenchPress.html"],
             ["Barbell Incline Bench Press", "Dumbbell Incline Bench Press"]);
-        mmbChest.exs[2] = new Exercise("Decline Bench Press", 2, "Explosive Power, 6 to 10 reps to failure",
+        mmbChest.exs[2] = new Exercise("Decline Bench Press", 3, "Explosive Power, 6 to 10 reps to failure",
             ["http://exrx.net/WeightExercises/PectoralSternal/BBDeclineBenchPress.html", "http://exrx.net/WeightExercises/PectoralSternal/DBDeclineBenchPress.html"],
             ["Barbell Decline Bench Press", "Dumbbell Decline Bench Press"]);
-        mmbChest.exs[3] = new Exercise("Chest Fly", 1, "Constant speed, 8 to 12 reps to failure",
+        mmbChest.exs[3] = new Exercise("Chest Fly", 3, "Constant speed, 8 to 12 reps to failure",
             ["http://exrx.net/WeightExercises/PectoralSternal/LVSeatedFly.html", "http://exrx.net/WeightExercises/PectoralSternal/LVPecDeckFly.html", "http://exrx.net/WeightExercises/PectoralSternal/DBFly.html"],
             ["Lever Seated Fly", "Lever Pec Deck Fly", "Dumbbell Fly"]);
 
@@ -441,7 +422,6 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
             }
         });
         
-        
         workouts = {mmbChest: mmbChest, mmbBack: mmbBack, mmbShoulder: mmbShoulder, mmbArm: mmbArm, mmbLeg: mmbLeg, fbPush: fbPush, fbPull: fbPull, fbLeg: fbLeg, abDeath: abDeath, dailyM: dailyM};
         var temp = {};
         base.extendDeep(temp, workouts);
@@ -456,21 +436,54 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         $.mobile.pageLoading( true );
         var loc = window.location.href;
         loc = loc.split('#').pop();
+        parts = dom.bindIDs();
         ns.client = new clientLib.Client(ns);
         ns.client.saveInterval = 60;
         if (loc !== "home" && loc !== "http://" + ns.client.appHost + "/") {
             $.mobile.changePage(loc, 'pop', false, true);
         }
-        parts = dom.bindIDs();
-        
-        $('.timersp').click(playPauseTimer);
-        $('.timerrs').click(resetTimer);
+        $('.start').click(toggleTimer);
         $('.save').click(function(){
-            console.log('save button clicked');
             ns.client.save();
         });
         $('.sign-in').click(ns.client.signInOut.fnMethod(ns.client));
         ns.client.autoLoad = false;
+        
+        $('div').live('pageshow',function(event, ui){
+            var loc = window.location.href.split('#').pop().split('-');
+            if (loc.length == 2 && t) {
+                var active = $(ui.prevPage);
+                var start = active.find('#start');
+                var numid = active.find('.timer');
+                var textid = start.find('.ui-btn-text');
+                var iconid = start.find('.ui-icon');
+                numid.html('00:00');
+                iconid.removeClass('ui-icon-pause');
+                iconid.addClass('ui-icon-play');
+                textid.html("Start Timer");
+            }
+        });
+        $('div').live('pagehide',function(event, ui){
+            var loc = window.location.href.split('#').pop().split('-');
+            if (loc.length == 2 && t) {
+                var active = $(ui.nextPage);
+                var start = active.find('#start');
+                var value = t.numid.html();
+                t.numid = active.find('.timer');
+                t.numid.html(value);
+                t.textid = start.find('.ui-btn-text');
+                t.iconid = start.find('.ui-icon');
+                if (t.running) {
+                    t.iconid.addClass('ui-icon-pause');
+                    t.iconid.removeClass('ui-icon-play');
+                    t.textid.html("Stop Timer");
+                } else {
+                    t.iconid.removeClass('ui-icon-pause');
+                    t.iconid.addClass('ui-icon-play');
+                    t.textid.html("Start Timer");
+                }
+            }
+        });
     }
     
 
@@ -511,26 +524,44 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
     
     function setDoc(json)
     {
-        if (json.blob.version == 1.1) {
-            workouts = json.blob.data;
-        } else if (json.blob.version == 1.0) {
-            workouts = base.extendObject(workouts, json.blob.data);
+        var i, j, ex, data, workout, id;
+        if (json.blob.version < 2){
+            data = {};
+            for (id in json.blob.data) {
+                if (!json.blob.data.hasOwnProperty(id)) {
+                    continue;
+                }
+                data[id] = [];
+                for (i = 0; i < workouts[id].exs.length; i++) {
+                    ex = workouts[id].exs[i];
+                    data[id][i] = [];
+                    for (j = 0; j < ex.sets.length; j++) {
+                        data[id][i][j] = {};
+                        sets = json.blob.data[id].exs[i].sets;
+                        if (sets[j]) {
+                            data[id][i][j]['reps'] = sets[j].reps;
+                            data[id][i][j]['weight'] = sets[j].weight;
+                        }
+                    }
+                }
+            }
+        } else {
+            data = json.blob.data;
         }
-        var i, j, workout, w, r;
-        for (var name in workouts) {
-            if (!workouts.hasOwnProperty(name)) {
+        var w, r, id;
+        for (id in data) {
+            if (!data.hasOwnProperty(id)) {
               continue;
             }
-            workout = workouts[name];
-            for (i = 0; i < workout.exs.length; i++) {
-                for (j = 0; j < workout.exs[i].sets.length; j++) {
-                    r = $(parts[workout.id + '-' + i + '-r' + j]);
-                    w = $(parts[workout.id + '-' + i + '-w' + j]);
+            for (i = 0; i < data[id].length; i++) {
+                for (j = 0; j < data[id][i].length; j++) {
+                    r = $(parts[id + '-' + i + '-r' + j]);
+                    w = $(parts[id + '-' + i + '-w' + j]);
                     if (r && r[0]) {
-                        r.attr('value', workout.exs[i].sets[j].reps);
+                        r.attr('value', data[id][i][j].reps);
                     }
-                    if (w && w[0]){
-                        w.attr('value', workout.exs[i].sets[j].weight);
+                    if (w && w[0]) {
+                        w.attr('value', data[id][i][j].weight);
                     }
                 }
             }
@@ -539,28 +570,29 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
 
     function getDoc()
     {
-        var page = $('.ui-page-active');
-        if (page[0] && page.attr('id') && page.attr('id').split('-')[1]) {
-            var id = $('.ui-page-active').attr('id');
-            var splitid = id.split('-');
-            if (splitid.length !== 2) {
-                break;
+        var data = {}, i, j, ex, r, w;
+        for (var id in workouts) {
+            if (!workouts.hasOwnProperty(id)) {
+                continue;
             }
-            var exercise = workouts[splitid[0]].exs[splitid[1]];
-            for (i = 0; i < exercise.sets.length; i++) {
-                var w = $(parts[id + '-w' + i]);
-                var r = $(parts[id + '-r' + i])
-                if (w && w[0]) {
-                    exercise.sets[i].weight = w.attr('value');
-                }
-                if (r && r[0]) {
-                    exercise.sets[i].reps = r.attr('value');
+            data[id] = [];
+            for (i = 0; i < workouts[id].exs.length; i++) {
+                data[id][i] = [];
+                ex = workouts[id].exs[i];
+                for (j = 0; j < ex.sets.length; j++) {
+                    w = parts[id + '-' + i + '-w' + j];
+                    r = parts[id + '-' + i + '-r' + j];
+                    data[id][i][j] = {};
+                    if (r && w) {
+                        data[id][i][j]['reps'] = $(r).attr('value');
+                        data[id][i][j]['weight'] = $(w).attr('value');
+                    }
                 }
             }
         }
         return {
             readers: ['public'],
-            blob: {version: 1.1, data: workouts}
+            blob: {version: 2, data: data}
         };
     }
 
@@ -570,7 +602,6 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         'setDoc': setDoc,
         'Exercise': Exercise,
         'Workout': Workout,
-        'changeIcon': changeIcon,
         't': t,
         'getDocid': getDocid,
         'setDocid': setDocid,

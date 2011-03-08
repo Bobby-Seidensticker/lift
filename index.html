@@ -71,7 +71,7 @@ $(document).ready(lift.onReady);
 		{{/each}}
 	</div>
 	<div data-role="footer">
-		<h4 class='invis'>'footer'</h4>
+		<h4 class='invis'>invisible text</h4>
 	</div>
 </div>
 
@@ -83,13 +83,6 @@ $(document).ready(lift.onReady);
 		<a data-icon="star" class="sign-in">Sign In</a>
 	</div>
 	<div data-role="content">
-		{{if exs[i].links !== undefined}}
-			<a href="#${ id }-${ i }-form" data-role="button" data-icon="arrow-r" data-iconpos="right" >Proper Form</a>
-		{{/if}}
-		<div data-role="collapsible">
-		<h3>Description and Info</h3>
-		<p> ${ ex.info } </p>
-		</div>
 		<div class=ui-grid-a>
 			<div class=ui-block-a>
 				<h4>Weight</h4>
@@ -104,41 +97,27 @@ $(document).ready(lift.onReady);
 				{{/each}}
 			</div>
 		</div>
+		{{if (i + 1) == exs.length}}
+			<a href="#${ id }" class='save' id="${ id }-${ i }-save" data-role="button" data-icon="check" data-direction="reverse" data-transition="slide" >Finished</a>
+		{{else}}
+			<a href="#${ id }-${ i + 1 }" class='save' id="${ id }-${ i }-save" data-role="button" data-icon="check">Next</a>
+		{{/if}}
+		<h4 class='rest-timer'>Rest Timer</h4>
 		<h1 class="timer">00:00</h1>
-		<div data-role=controlgroup>
-			<a data-role="button" data-icon="refresh" class="timerrs">Restart Timer</a>
-			<a data-role="button" data-icon="play" class="timersp">Start Timer</a>
-		</div>
-		<div data-role=controlgroup>
-			{{if (i + 1) == exs.length}}
-				<a href="#${ id }" class='save' id="${ id }-${ i }-save" data-role="button" data-icon="check" data-direction="reverse" data-transition="slide" >Save & Done!</a>
-			{{else}}
-				<a href="#${ id }-${ i + 1 }" class='save' id="${ id }-${ i }-save" data-role="button" data-icon="check">Save & Next</a>
-			{{/if}}
-		</div>
+		<a data-role="button" data-icon="play" id="start" class="start">Start Timer</a>
+		<p> ${ ex.info } </p>
+		{{if exs[i].links !== undefined}}
+			{{each(i, link) links}}
+				<a href="${ link.url }" target="_blank" data-role="button" data-iconpos="right" data-icon="info" >${ link.name }</a>
+			{{/each}}
+		{{/if}}
 	</div>
 	<div data-role="footer">
-		<h4> </h4>
+		<h4 class='invis'>invisible text</h4>
 	</div>
 </div>
 
-{{if exs[i].links !== undefined}}
-<div data-role="page" id="${ id }-${ i }-form" data-url="${ id }-${ i }-form">
-	<div data-role="header">
-		<a href="#${ id }-${ i }" class="save" data-icon="arrow-l" data-direction="reverse" data-transition="slide" >Back</a>
-		<h1>${ name } Form</h1>
-		<a data-icon="star" class="sign-in">Sign In</a>
-	</div>
-	<div data-role="content">
-		{{each(i, link) links}}
-			<a href="${ link.url }" target="_blank" data-role="button" data-iconpos="right" data-icon="info" >${ link.name }</a>
-		{{/each}}
-	</div>
-	<div data-role="footer">
-		<h4> </h4>
-	</div>
-</div>
-{{/if}}
+
 {{/each}}
 </script>
 
