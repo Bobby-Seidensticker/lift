@@ -440,7 +440,7 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         ns.client = new clientLib.Client(ns);
         ns.client.saveInterval = 60;
         if (loc !== "home" && loc !== "http://" + ns.client.appHost + "/") {
-            $.mobile.changePage(loc, 'pop', false, true);
+            $.mobile.changePage(loc, null, false, true);
         }
         $('.start').click(toggleTimer);
         $('.save').click(function(){
@@ -449,7 +449,13 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         $('.sign-in').click(ns.client.signInOut.fnMethod(ns.client));
         ns.client.autoLoad = false;
         
+        $('div').live('pagecreate', function(event) {
+            var loc = event.currentTarget.baseURI.split('/').pop();
+            $.mobile.changePage(loc, null, false, true);
+        });
+        
         $('div').live('pageshow',function(event, ui){
+            console.log('pageshow');
             var loc = window.location.href.split('#').pop().split('-');
             if (loc.length == 2 && t) {
                 var active = $(ui.prevPage);
@@ -486,12 +492,17 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         });
     }
     
+    var premergeJSON;
+    var doMerge;
+    
+    function confirmDiscard()
+    {
+        doMerge = true;
+        return true;
+    }
 
     function getDocid()
     {
-        if (ns.client.username == undefined) {
-            return;
-        }
         return ns.client.username;
     }
     
@@ -513,7 +524,7 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
             }
         }
     }
-    
+
     function onUserChange(username) {
         if (username == undefined) {
             changeSignInOutText($('.sign-in'), "Sign In");
@@ -521,9 +532,19 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         }
         changeSignInOutText($('.sign-in'), "Sign Out");
     }
-    
+
     function setDoc(json)
     {
+        if (doMerge) {
+            var mergeData = getDoc();
+            doMerge = false;
+            if (mergeData.blob.version == json.blob.version){
+                premergeJSON = json;
+            } else {
+                alert("Due to version change of save data, Lift was unable to merge the data you've just entered with your saved data.  " + 
+                    "Your recent data has been overwritten and your save data's version number has been updated");
+            }
+        }
         var i, j, ex, data, workout, id;
         if (json.blob.version < 2){
             data = {};
@@ -557,10 +578,10 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
                 for (j = 0; j < data[id][i].length; j++) {
                     r = $(parts[id + '-' + i + '-r' + j]);
                     w = $(parts[id + '-' + i + '-w' + j]);
-                    if (r && r[0]) {
+                    if (r && r[0] && (!premergeJSON || (premergeJSON && mergeData.blob.data[id][i][j].reps == ""))) {
                         r.attr('value', data[id][i][j].reps);
                     }
-                    if (w && w[0]) {
+                    if (w && w[0] && (!premergeJSON || (premergeJSON && mergeData.blob.data[id][i][j].weight == ""))) {
                         w.attr('value', data[id][i][j].weight);
                     }
                 }
@@ -570,7 +591,12 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
 
     function getDoc()
     {
-        var data = {}, i, j, ex, r, w;
+        if (premergeJSON) {
+            var temp = premergeJSON;
+            premergeJSON = undefined;
+            return temp;
+        }
+        var data = {}, i, j, r, w;
         for (var id in workouts) {
             if (!workouts.hasOwnProperty(id)) {
                 continue;
@@ -578,8 +604,7 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
             data[id] = [];
             for (i = 0; i < workouts[id].exs.length; i++) {
                 data[id][i] = [];
-                ex = workouts[id].exs[i];
-                for (j = 0; j < ex.sets.length; j++) {
+                for (j = 0; j < workouts[id].exs[i].sets.length; j++) {
                     w = parts[id + '-' + i + '-w' + j];
                     r = parts[id + '-' + i + '-r' + j];
                     data[id][i][j] = {};
@@ -606,7 +631,8 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         'getDocid': getDocid,
         'setDocid': setDocid,
         'onUserChange': onUserChange,
-        'workouts': workouts
+        'workouts': workouts,
+        'confirmDiscard': confirmDiscard
     });
 });
 
