@@ -180,19 +180,6 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
     
     function onReady()
     {
-        /*
-        var exs = [];
-        exs[0] = new lift.Exercise("Bench Press", 4, "8 to 12 reps to failure");
-        exs[1] = new lift.Exercise("Incline Bench Press", 4, "8 to 12 reps to failure");
-        exs[2] = new lift.Exercise("Decline Bench Press", 3, "8 to 12 reps to failure");
-        exs[3] = new lift.Exercise("Chest Flys", 3, "12 to 18 reps to failure");
-        w = new lift.Workout(exs, "Beginner Chest Routine", "Good for building muscles and stuff");
-        $('#content').append(w.toHTML());
-        
-        var i, t = [];
-        $("#timer").click(playPauseTimer);
-        $("#reset").click(resetTimer);
-        */
         home = {};
         home.header = 'Lift';
         home.footer = 'footer';
@@ -201,9 +188,9 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         home.workoutGroups[0].workouts = [ 
                                           { id: 'mmbChest', name: "Chest Day" },
                                           { id: 'mmbBack', name: "Back Day" },
+                                          { id: 'mmbLeg', name: "Leg Day" },
                                           { id: 'mmbShoulder', name: "Shoulder Day" },
-                                          { id: 'mmbArm', name: "Arm Day" },
-                                          { id: 'mmbLeg', name: "Leg Day" } ];
+                                          { id: 'mmbArm', name: "Arm Day" } ];
         home.workoutGroups[1] = { name: "Full Body Conditioning", workouts: [] };
         home.workoutGroups[1].workouts = [
                                           { id: 'fbPush', name: "Push Day" },
@@ -221,95 +208,121 @@ namespace.lookup('com.pageforest.lift').defineOnce(function (ns) {
         
         var mmbChest = new Workout("Max Chest Day", 'mmbChest', "Build muscle mass fast.  Use only when eating an excess of calories");
         
-        mmbChest.exs[0] = new Exercise("Bench Press", 3, "Explosive Power, 6 to 10 reps to failure", 
+        mmbChest.exs[0] = new Exercise("Bench Press", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  'One Thousands' 'Mississippis' and 'Bananas' are all acceptable approximations for seconds.   " +
+            "Shoot for 8 to 12 reps to failure.  As soon as you are unable to complete a rep without assistance, stop immediately.  Do not continue to do forced repetitions", 
             ["http://exrx.net/WeightExercises/PectoralSternal/BBBenchPress.html", "http://exrx.net/WeightExercises/PectoralSternal/DBBenchPress.html"],
             ["Barbell Bench Press", "Dumbbell Bench Press"]);
-        mmbChest.exs[1] = new Exercise("Incline Bench Press", 3, "Explosive Power, 6 to 10 reps to failure",
+        mmbChest.exs[1] = new Exercise("Incline Bench Press", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  Shoot for 8 to 12 reps to failure",
             ["http://exrx.net/WeightExercises/PectoralClavicular/BBInclineBenchPress.html", "http://exrx.net/WeightExercises/PectoralClavicular/DBInclineBenchPress.html"],
             ["Barbell Incline Bench Press", "Dumbbell Incline Bench Press"]);
-        mmbChest.exs[2] = new Exercise("Decline Bench Press", 3, "Explosive Power, 6 to 10 reps to failure",
+        mmbChest.exs[2] = new Exercise("Decline Bench Press", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  Shoot for 8 to 12 reps to failure",
             ["http://exrx.net/WeightExercises/PectoralSternal/BBDeclineBenchPress.html", "http://exrx.net/WeightExercises/PectoralSternal/DBDeclineBenchPress.html"],
             ["Barbell Decline Bench Press", "Dumbbell Decline Bench Press"]);
-        mmbChest.exs[3] = new Exercise("Chest Fly", 3, "Constant speed, 8 to 12 reps to failure",
+        mmbChest.exs[3] = new Exercise("Chest Fly", 2, "No warmup required.  For flys count 5 seconds down and 5 seconds up.  Shoot for 8 to 12 reps to failure",
             ["http://exrx.net/WeightExercises/PectoralSternal/LVSeatedFly.html", "http://exrx.net/WeightExercises/PectoralSternal/LVPecDeckFly.html", "http://exrx.net/WeightExercises/PectoralSternal/DBFly.html"],
             ["Lever Seated Fly", "Lever Pec Deck Fly", "Dumbbell Fly"]);
-
         initLoad.push(mmbChest);
         
-        
-
-        
         var mmbBack = new Workout("Max Back Day", 'mmbBack', "Build muscle mass fast.  Use only when eating an excess of calories");
-        mmbBack.exs[0] = new Exercise("Chin Ups", 3, "Explosive Power, 6 to 10 reps to failure",
+        mmbBack.exs[0] = new Exercise("Chin Ups", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  'One Thousands' 'Mississippis' and 'Bananas' are all acceptable approximations for seconds.   " +
+            "Shoot for 8 to 12 reps to failure.  As soon as you are unable to complete a rep without assistance, stop immediately.  Do not continue to do forced repetitions",
             ["http://exrx.net/WeightExercises/LatissimusDorsi/BWChinup.html", "http://exrx.net/WeightExercises/LatissimusDorsi/WtChinup.html"],
             ["Bodyweight Chin Up", "Weighted Chin Up"]);
-        mmbBack.exs[1] = new Exercise("Bent-over Row", 3, "Explosive Power, 6 to 10 reps to failure",
+        mmbBack.exs[1] = new Exercise("Bent-over Row", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  Shoot for 8 to 12 reps to failure",
             ["http://exrx.net/WeightExercises/BackGeneral/BBBentOverRow.html", "http://exrx.net/WeightExercises/BackGeneral/DBBentOverRow.html"],
             ["Barbell Row", "Dumbbell Row"]);
-        mmbBack.exs[2] = new Exercise("Lat Pulldown", 3, "Constant speed, 6 to 10 reps to failure",
+        mmbBack.exs[2] = new Exercise("Lat Pulldown", 2, "No warmup required.  Count 5 seconds down and 5 seconds up.  Shoot for 8 to 12 reps to failure",
             ["http://exrx.net/WeightExercises/LatissimusDorsi/LVFrontPulldown.html"],
             ["Lever Front Pulldown"]);
-        mmbBack.exs[3] = new Exercise("Seated Row", 3, "Explosive Power, 6 to 10 reps to failure",
+        mmbBack.exs[3] = new Exercise("Seated Row", 2, "No warmup required.  Count 5 seconds down and 5 seconds up.  Shoot for 8 to 12 reps to failure",
             ["http://exrx.net/WeightExercises/BackGeneral/CBSeatedRow.html"],
             ["Cable Seated Row"]);
         initLoad.push(mmbBack);
         
+        var mmbLeg = new Workout("Max Leg Day", 'mmbLeg', "Build muscle mass fast.  Use only when eating an excess of calories");
+        mmbLeg.exs[0] = new Exercise("Squat", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  'One Thousands' 'Mississippis' and 'Bananas' are all acceptable approximations for seconds.   " +
+            "Shoot for 8 to 12 reps to failure.  As soon as you are unable to complete a rep without assistance, stop immediately.  Do not continue to do forced repetitions",
+            ["http://exrx.net/WeightExercises/Quadriceps/BBSquat.html"],
+            ["Squat"]);
+        mmbLeg.exs[1] = new Exercise("Lunge", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  Shoot for 8 to 12 reps to failure",
+            ["http://exrx.net/WeightExercises/Quadriceps/DBLunge.html"],
+            ["Dumbbell Lunge"]);
+        mmbLeg.exs[2] = new Exercise("Leg Curl", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  Shoot for 8 to 12 reps to failure",
+            ["http://exrx.net/WeightExercises/Hamstrings/LVSeatedLegCurlH.html"],
+            ["Seated Leg Curl"]);
+        mmbLeg.exs[3] = new Exercise("Leg Extension", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  Shoot for 8 to 12 reps to failure",
+            ["http://exrx.net/WeightExercises/Quadriceps/LVLegExtension.html"],
+            ["Seated Leg Extension"]);
+        mmbLeg.exs[4] = new Exercise("Calf Raises", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  Shoot for 8 to 12 reps to failure",
+            ["http://exrx.net/WeightExercises/Gastrocnemius/BBStandingCalfRaise.html", "http://exrx.net/WeightExercises/Gastrocnemius/LVSeatedCalfPress.html"],
+            ["Barbell Standing Calf Raise", "Seated Calf Press"]);
+        initLoad.push(mmbLeg);
+        
         var mmbShoulder = new Workout("Max Shoulder Day", 'mmbShoulder', "Build muscle mass fast.  Use only when eating an excess of calories");
-        mmbShoulder.exs[0] = new Exercise("Shoulder Press", 3, "Explosive Power, 6 to 10 reps to failure",
+        mmbShoulder.exs[0] = new Exercise("Shoulder Press", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  'One Thousands' 'Mississippis' and 'Bananas' are all acceptable approximations for seconds.   " +
+            "Shoot for 8 to 12 reps to failure.  As soon as you are unable to complete a rep without assistance, stop immediately.  Do not continue to do forced repetitions",
             ["http://exrx.net/WeightExercises/DeltoidAnterior/BBMilitaryPress.html", "http://exrx.net/WeightExercises/DeltoidAnterior/DBShoulderPress.html"],
             ["Barbell Shoulder Press", "Dumbbell Shoulder Press"]);
-        mmbShoulder.exs[1] = new Exercise("Upright Row", 3, "Explosive Power, 6 to 10 reps to failure",
+        mmbShoulder.exs[1] = new Exercise("Upright Row", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  Shoot for 8 to 12 reps to failure",
             ["http://exrx.net/WeightExercises/DeltoidLateral/BBUprightRow.html"],
             ["Barbell Upright Row"]);
-        mmbShoulder.exs[2] = new Exercise("Arnold Press", 3, "Constant speed, 6 to 10 reps to failure",
-            ["http://exrx.net/WeightExercises/DeltoidAnterior/DBArnoldPress.html"],
-            ["Arnold Press"]);
-        mmbShoulder.exs[3] = new Exercise("Rear Lateral Fly", 3, "Constant speed, 6 to 10 reps to failure",
+        mmbShoulder.exs[2] = new Exercise("Arnold Press", 3, "The Arnold press can be dangerous if you are unskilled.  " +
+            "If you are uncomfortable, try the less complicated Front Raise.  One warmup set at approx 50% of 1 rep max.  " +
+            "For maximum muscle tearing and even musculature, count 3 seconds up and 3 seconds down each rep.  Shoot for 8 to 12 reps to failure",
+            ["http://exrx.net/WeightExercises/DeltoidAnterior/DBArnoldPress.html", "http://exrx.net/WeightExercises/DeltoidAnterior/DBAlternatingFrontRaise.html", 
+             "http://exrx.net/WeightExercises/DeltoidAnterior/BBFrontRaise.html"],
+            ["Arnold Press", "Alternating Dumbbell Front Raise", "Barbell Front Raise"]);
+        mmbShoulder.exs[3] = new Exercise("Rear Lateral Fly", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  Shoot for 8 to 12 reps to failure",
             ["http://exrx.net/WeightExercises/DeltoidPosterior/LVRearLateralRaise.html", "http://exrx.net/WeightExercises/DeltoidPosterior/DBRearLateralRaise.html"],
             ["Rear Lateral Fly", "Dumbbel Rear Lateral Raise"]);
-        mmbShoulder.exs[4] = new Exercise("Shrugs", 3, "Explosive Power, 6 to 10 reps to failure",
+        mmbShoulder.exs[4] = new Exercise("Shrugs", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  Shoot for 8 to 12 reps to failure",
             ["http://exrx.net/WeightExercises/TrapeziusUpper/BBShrug.html", "http://exrx.net/WeightExercises/TrapeziusUpper/DBShrug.html"],
             ["Barbell Shrug", "Dumbbell Shrug"]);
         initLoad.push(mmbShoulder);
 
         var mmbArm = new Workout("Max Arm Day", 'mmbArm', "Build muscle mass fast.  Use only when eating an excess of calories");
-        mmbArm.exs[0] = new Exercise("Dumbbell Curls", 3, "Constant speed, keep under control, 6 to 10 reps to failure",
+        mmbArm.exs[0] = new Exercise("Dumbbell Curls", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  'One Thousands' 'Mississippis' and 'Bananas' are all acceptable approximations for seconds.   " +
+            "Shoot for 8 to 12 reps to failure.  As soon as you are unable to complete a rep without assistance, stop immediately.  Do not continue to do forced repetitions",
             ["http://exrx.net/WeightExercises/Biceps/DBCurl.html"],
             ["Dumbbell Curl"]);
-        mmbArm.exs[1] = new Exercise("Tricep Dips", 3, "Constant speed, keep under control, 6 to 10 reps to failure",
+        mmbArm.exs[1] = new Exercise("Tricep Dips", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  Shoot for 8 to 12 reps to failure",
             ["http://exrx.net/WeightExercises/Triceps/ASTriDip.html"],
             ["Tricep Dip"]);
-        mmbArm.exs[2] = new Exercise("Barbell Curls", 3, "Constant speed, keep under control, 6 to 10 reps to failure",
+        mmbArm.exs[2] = new Exercise("Barbell Curls", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  Shoot for 8 to 12 reps to failure",
             ["http://exrx.net/WeightExercises/Biceps/BBCurl.html", "http://exrx.net/WeightExercises/Brachialis/BBProneInclineCurl.html"],
             ["Barbell Curl", "Barbell Prone Incline Curl"]);
-        mmbArm.exs[3] = new Exercise("Skull Crushers", 3, "Constant speed, keep under control, 6 to 10 reps to failure",
+        mmbArm.exs[3] = new Exercise("Skull Crushers", 3, "One warmup set at approx 50% of 1 rep max.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  Shoot for 8 to 12 reps to failure",
             ["http://exrx.net/WeightExercises/Triceps/BBLyingTriExtSC.html"],
             ["Skull Crusher"]);
-        mmbArm.exs[4] = new Exercise("Preacher Curl", 3, "Constant speed, keep under control, 8 to 12 reps to failure",
+        mmbArm.exs[4] = new Exercise("Preacher Curl", 2, "No warmup necessary.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  Shoot for 8 to 12 reps to failure",
             ["http://exrx.net/WeightExercises/Brachialis/BBPreacherCurl.html"],
             ["Preacher Curl"]);
-        mmbArm.exs[5] = new Exercise("Dumbbell Kickback", 3, "Constant speed, squeeze at the top, 8 to 12 reps to failure",
+        mmbArm.exs[5] = new Exercise("Dumbbell Kickback", 2, "no warmup necessary.  For maximum muscle tearing and even musculature, " +
+            "count 3 seconds up and 3 seconds down each rep.  Shoot for 8 to 12 reps to failure",
             ["http://exrx.net/WeightExercises/Triceps/DBKickback.html"],
             ["Dumbbell Kickback"]);
         initLoad.push(mmbArm);
 
-        var mmbLeg = new Workout("Max Leg Day", 'mmbLeg', "Build muscle mass fast.  Use only when eating an excess of calories");
-        mmbLeg.exs[0] = new Exercise("Squat", 3, "Explosive Power, 6 to 10 reps to failure",
-            ["http://exrx.net/WeightExercises/Quadriceps/BBSquat.html"],
-            ["Squat"]);
-        mmbLeg.exs[1] = new Exercise("Lunge", 3, "Explosive Power, 6 to 10 reps per leg to failure",
-            ["http://exrx.net/WeightExercises/Quadriceps/DBLunge.html"],
-            ["Dumbbell Lunge"]);
-        mmbLeg.exs[2] = new Exercise("Leg Curl", 3, "Constant speed, 8 to 12 reps to failure",
-            ["http://exrx.net/WeightExercises/Hamstrings/LVSeatedLegCurlH.html"],
-            ["Seated Leg Curl"]);
-        mmbLeg.exs[3] = new Exercise("Leg Extension", 3, "Constant speed, 8 to 12 reps to failure",
-            ["http://exrx.net/WeightExercises/Quadriceps/LVLegExtension.html"],
-            ["Seated Leg Extension"]);
-        mmbLeg.exs[4] = new Exercise("Calf Raises", 3, "Constant speed, 8 to 12 reps to failure",
-            ["http://exrx.net/WeightExercises/Gastrocnemius/BBStandingCalfRaise.html", "http://exrx.net/WeightExercises/Gastrocnemius/LVSeatedCalfPress.html"],
-            ["Barbell Standing Calf Raise", "Seated Calf Press"]);
-        initLoad.push(mmbLeg);
+        
         
         var fbPush = new Workout("Push", "fbPush", "3 day a week split");
         fbPush.exs[0] = new Exercise("Bench Press", 3, "1 warmup set of 10 reps at an easy weight.  2 sets to failure of 8 to 12 reps.  Each rep should be executed with good form until failure is achieved.",

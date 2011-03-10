@@ -38,6 +38,7 @@ $(document).ready(lift.onReady);
 		<a data-icon="star" class="sign-in">Sign In</a>
 	</div>
 	<div data-role="content">
+		<a href="#about" data-icon="info" data-iconpos="right" data-role="button">Readme!</a>
 		{{tmpl($data.workoutGroups) "#workoutGroupTemplate"}}
 	</div>
 	<div data-role="footer">
@@ -117,13 +118,57 @@ $(document).ready(lift.onReady);
 	</div>
 </div>
 
-
 {{/each}}
 </script>
 
-<div data-role="page" id="home">
+<div data-role="page" id="home"></div>
+<div data-role="page" id="about">
+	<div data-role="header">
+		<h1>About Lift</h1>
+		<a href="#home" data-icon="arrow-l" data-direction="reverse" data-transition="slide" >Back</a>
+	</div>
+	<div data-role="content">
+		<p>
+		Lift is designed to help those who don't know what to do at the gym.  When I started working out I was extremely motivated.  
+		I lifted 5 days a week and choked down 5000+ calories a day.  I gained 30 pounds (mostly muscle) in 3 months.  
+		I have helped others do the same as I, but I wanted to make the process of relaying my knowledge easier.  So I created Lift.
+		</p>
+		<p> 
+		You can follow my workout routine and record how much you lift, so you can beat it next workout.  
+		This makes it easy to catch yourself if you're doing something wrong.  If you can't beat your previous values, you are overtraining or you aren't eating enough.  
+		Remember: you only want to lift as much as is necessary to tell your muscles to grow.
+		Muscles aren't built at the gym.  They're built at home, out of animals.  
+		</p>
+		<p>
+		Also, I'm not a personal trainer, I don't actually know stuff.  However, the people who run this <a href="exrx.net">site</a> do.
+		</p>
+		<p>
+		Here are a few of my favorite bits on the site.
+		</p>
+		<a href="http://www.exrx.net/WeightTraining/Tips.html#anchor2774269" data-role="button">Identify Initial Resistances</a>
+		<a href="http://www.exrx.net/WeightTraining/Tips.htm" data-role="button">Weight Training Tips</a>
+		<a href="http://www.exrx.net/Beginning.html" data-role="button">Beginners Page</a>
+		<a href="http://www.exrx.net/Lists/Directory.html" data-role="button">Exercise Directory</a>
+		<a href="http://www.exrx.net/Kinesiology/Weaknesses.html" data-role="button">Common Muscular Weaknesses</a>
+		<a href="http://www.exrx.net/WeightTraining/Myths.html#anchor7441959" data-role="button">Myths</a>
+		<a href="http://www.exrx.net/Kinesiology/Posture.html" data-role="button">Get Perfect Posture</a>
+		<p>
+		Current Version 1.0
+		</p>
+		<p>
+		
+		Features under development:
+		<ul>Fully adjustable workouts</ul>
+		<ul>Workout "Marketplace"</ul>
+		</p>
+		<p>
+		For feature requests, comments, criticisms, and spelling errorz, contact me at bseidensticker@gmail.com
+		</p>
+	</div>
+	<div data-role="footer">
+		<h4 class="invis">'invisible text'</h4>
+	</div>
 </div>
-
 
 
 <!-- 
