@@ -1,5 +1,5 @@
 <!DOCTYPE html> 
-<html manifest="/app.manifestremovethis">
+<html manifest="/app.manifest">
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
@@ -8,10 +8,10 @@
 <link rel="icon" type="image/png" href="/images/icon.png" />
 <link rel="apple-touch-icon" href="/images/touch.png" />
 <link rel="stylesheet" type="text/css" href="/lib/beta/css/client.css" />
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.css" />
+<link rel="stylesheet" href="/jquery/jquery.mobile-1.0a3.min.css" />
 <link rel="stylesheet" type="text/css" href="lift.css"/>
 
-<script type="text/javascript" src="/jquery/jquery-1.5.1.js"></script>
+<script type="text/javascript" src="/jquery/jquery-1.5.1.min.js"></script>
 <script type="text/javascript" src="/jquery/jquery.tmpl.min.js"></script>
 <script type="text/javascript">
 $(document).bind('mobilinit', function(){
@@ -20,7 +20,7 @@ $(document).bind('mobilinit', function(){
 });
 
 </script>
-<script type="text/javascript" src="/jquery/jquery.mobile-1.0a3.js"></script>
+<script type="text/javascript" src="/jquery/jquery.mobile-1.0a3.min.js"></script>
 
 <script type="text/javascript" src="/lib/beta/js/json2.min.js"></script>
 <script type="text/javascript" src="/lib/beta/js/utils.js"></script>
@@ -129,13 +129,15 @@ $(document).ready(lift.onReady);
 	</div>
 	<div data-role="content">
 		<p>
-		Lift is designed to help those who don't know what to do at the gym.  When I started working out I was extremely motivated.  
-		I lifted 5 days a week and choked down 5000+ calories a day.  I gained 30 pounds (mostly muscle) in 3 months.  
-		I have helped others do the same as I, but I wanted to make the process of relaying my knowledge easier.  So I created Lift.
+		I created Lift so I can tell you how to lift without telling you how to lift.
+		</p>
+		<p>
+		This web app is powered by pageforest.  Create an account to save your data.
 		</p>
 		<p> 
 		You can follow my workout routine and record how much you lift, so you can beat it next workout.  
-		This makes it easy to catch yourself if you're doing something wrong.  If you can't beat your previous values, you are overtraining or you aren't eating enough.  
+		This makes it easier to catch yourself if you're doing something wrong.  
+		If you can't beat your previous values, you are overtraining or you aren't eating enough.  
 		Remember: you only want to lift as much as is necessary to tell your muscles to grow.
 		Muscles aren't built at the gym.  They're built at home, out of animals.  
 		</p>
@@ -143,7 +145,7 @@ $(document).ready(lift.onReady);
 		Also, I'm not a personal trainer, I don't actually know stuff.  However, the people who run this <a href="exrx.net">site</a> do.
 		</p>
 		<p>
-		Here are a few of my favorite bits on the site.
+		Here are a few of my favorite bits.
 		</p>
 		<a href="http://www.exrx.net/WeightTraining/Tips.html#anchor2774269" data-role="button">Identify Initial Resistances</a>
 		<a href="http://www.exrx.net/WeightTraining/Tips.htm" data-role="button">Weight Training Tips</a>
@@ -156,13 +158,18 @@ $(document).ready(lift.onReady);
 		Current Version 1.0
 		</p>
 		<p>
-		
-		Features under development:
-		<ul>Fully adjustable workouts</ul>
-		<ul>Workout "Marketplace"</ul>
+		This page uses the jQuery Mobile framework.  It is currently in alpha 3 so... ya.
 		</p>
 		<p>
-		For feature requests, comments, criticisms, and spelling errorz, contact me at bseidensticker@gmail.com
+		
+		Features under development:
+		<ul>Workout History</ul>
+		<ul>Fully adjustable workouts</ul>
+		<ul>Workout "Marketplace"</ul>
+		<ul>Advanced training plans</ul>
+		</p>
+		<p>
+		For feature requests, suggestions, comments, criticisms, and spelling errorz, contact me at bseidensticker@gmail.com
 		</p>
 	</div>
 	<div data-role="footer">
